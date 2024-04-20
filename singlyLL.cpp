@@ -175,10 +175,25 @@ public:
                 return true;
         return false;
     }
-    // Not yet
-    // bool isItemAtEqual(int element, int index)
-    // {
-    // }
+    /**
+     * Checks if node found at certain index has a certain value or not
+     * @param {element} int : value to search for
+     * @param {index} int : index of node to look at
+     * @returns {bool} true if element found, false otherwise
+     */
+    bool isItemAtEqual(int element, int index)
+    {
+        if (index > length)
+            return false;
+        int cntr = 0;
+        for (Node *curr = head; curr; curr = curr->next)
+        {
+            if (++cntr == index)
+                if (curr->data == element)
+                    return true;
+        }
+        return false;
+    }
     /**
      * Swaps two nodes without swapping data
      * @param {firstItemIdx} int : index of first node (1 based)
