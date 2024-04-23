@@ -71,8 +71,7 @@ void Insertion_sortByName(vector<Student> &students) {
     }
 }
 
-vector<Student> readInputFromFile()
-{
+vector<Student> readInputFromFile() {
     vector<Student> students;
     ifstream fin("students.txt");
     if (fin.fail()) {
@@ -98,6 +97,7 @@ vector<Student> readInputFromFile()
 
 int main() {
     vector<Student> student_from_file = readInputFromFile();
+
     // example to check code
     Student adel(20220173, "Adel", 3.32);
     Student zeyad(20220146, "zeyad", 3.45);
