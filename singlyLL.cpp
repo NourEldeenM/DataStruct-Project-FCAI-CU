@@ -2,19 +2,21 @@
 
 using namespace std;
 
+template <typename T>
 struct Node
 {
     /* data */
-    int data;
+    T data;
     Node *next = nullptr;
-    Node(int data) : data(data) {}
+    Node(T data) : data(data) {}
 };
 
+template <typename T>
 class singlyLinkedList
 {
 private:
-    Node *head{}, *tail{};
-    int length;
+    Node<T> *head{}, *tail{};
+    int length = 0;
 
 public:
     /**
@@ -24,7 +26,8 @@ public:
      */
     void print()
     {
-        for (Node *curr = head; curr; curr = curr->next)
+        cout << "Length: " << length << endl;
+        for (Node<T> *curr = head; curr; curr = curr->next)
             cout << curr->data << ' ';
         cout << '\n';
     }
@@ -33,9 +36,9 @@ public:
      * @param {value} int : the element to be inserted
      * @returns {void}
      */
-    void insertAtHead(int value)
+    void insertAtHead(T value)
     {
-        Node *item = new Node(value);
+        Node<T> *item = new Node(value);
         item->next = head;
         head = item;
         length++;
@@ -45,9 +48,9 @@ public:
      * @param {value} int : the element to be inserted
      * @returns {void}
      */
-    void insertAtTail(int value)
+    void insertAtTail(T value)
     {
-        Node *item = new Node(value);
+        Node<T> *item = new Node(value);
         if (head == nullptr)
             head = tail = item;
         else
@@ -63,18 +66,28 @@ public:
      * @param {index} int : the position of the element to be inserted (1 based)
      * @returns {void}
      */
-    void insertAt(int value, int index)
+    void insertAt(T value, int index)
     {
+        if (index == length + 1)
+        {
+            insertAtTail(value);
+            return;
+        }
+        if (index == 1)
+        {
+            insertAtHead(value);
+            return;
+        }
         if (index > length)
             return;
 
         int cntr = 0;
-        for (Node *curr = head, *prev = nullptr; curr; prev = curr, curr = curr->next)
+        for (Node<T> *curr = head, *prev = nullptr; curr; prev = curr, curr = curr->next)
         {
             cntr++;
             if (cntr == index)
             {
-                Node *item = new Node(value);
+                Node<T> *item = new Node(value);
                 prev->next = item, item->next = curr;
                 length++;
                 return;
@@ -88,7 +101,7 @@ public:
      */
     void removeAtHead()
     {
-        Node *dummy = head;
+        Node<T> *dummy = head;
         head = head->next;
         delete dummy;
         length--;
@@ -100,11 +113,12 @@ public:
      */
     void removeAtTail()
     {
-        Node *prev = retrieveAt(length - 1);
-        Node *dummy = tail;
+        Node<T> *prev = retrieveAt(length - 1);
+        Node<T> *dummy = tail;
         tail = prev;
         delete dummy;
         tail->next = nullptr;
+        length--;
     }
     /**
      * Removes element found at certain index
@@ -119,9 +133,9 @@ public:
             removeAtTail();
         else
         {
-            Node *prev = retrieveAt(index - 1);
-            Node *after = prev->next->next;
-            Node *dummy = prev->next;
+            Node<T> *prev = retrieveAt(index - 1);
+            Node<T> *after = prev->next->next;
+            Node<T> *dummy = prev->next;
             prev->next = after;
             delete dummy;
         }
@@ -132,16 +146,17 @@ public:
      * @returns {*Node} the node found at position index
      * @returns {nullptr} if index > length
      */
-    Node *retrieveAt(int index)
+    Node<T> *retrieveAt(int index)
     {
         if (index > length)
             return nullptr;
         int counter = 0;
-        for (Node *current = head; current != nullptr; current = current->next)
+        for (Node<T> *current = head; current != nullptr; current = current->next)
         {
             if (++counter == index)
                 return current;
         }
+        return nullptr;
     }
     /**
      * Get the Node found at certain index
@@ -149,12 +164,12 @@ public:
      * @param {index} int : position of node to replace its old value
      * @returns {void}
      */
-    void replaceAt(int value, int index)
+    void replaceAt(T value, int index)
     {
         if (index > length)
             return;
         int cntr = 0;
-        for (Node *curr = head; curr; curr = curr->next)
+        for (Node<T> *curr = head; curr; curr = curr->next)
         {
             if (++cntr == index)
             {
@@ -168,9 +183,9 @@ public:
      * @param {value} int : value to search for
      * @returns {bool} true if element found, false otherwise
      */
-    bool isExist(int value)
+    bool isExist(T value)
     {
-        for (Node *curr = head; curr; curr = curr->next)
+        for (Node<T> *curr = head; curr; curr = curr->next)
             if (curr->data == value)
                 return true;
         return false;
@@ -181,12 +196,12 @@ public:
      * @param {index} int : index of node to look at
      * @returns {bool} true if element found, false otherwise
      */
-    bool isItemAtEqual(int element, int index)
+    bool isItemAtEqual(T element, int index)
     {
         if (index > length)
             return false;
         int cntr = 0;
-        for (Node *curr = head; curr; curr = curr->next)
+        for (Node<T> *curr = head; curr; curr = curr->next)
         {
             if (++cntr == index)
                 if (curr->data == element)
@@ -201,9 +216,49 @@ public:
      * @returns {void}
      */
     // Not yet
-    void swap(int firstItemIdx, int secondItemIdx)
-    {
-    }
+    // void swap(int firstItemIdx, int secondItemIdx)
+    // {
+    // Case 1: Indices out of range
+
+    // Case 2: first & second items are adjacent to each other
+    // Case 2.1: One of them is the head
+    // Case 2.2: None of them is the head or tail
+
+    // Case 3: first & second items are not adjacent
+    // Case 3.1: One of the is the head
+    // Case 3.2: None of them is head or tail
+    /*************************************************************/
+
+    // Case 1: Indices out of range
+    // if (firstItemIdx > length || secondItemIdx > length || firstItemIdx < 0 || secondItemIdx < 0 || firstItemIdx == secondItemIdx)
+    //     return;
+
+    // Case 2: first & second items are adjacent to each other
+    // Case 2.1: One of them is the head or tail
+    // if (abs(firstItemIdx - secondItemIdx) == 1)
+    // {
+    //     Node *first = retrieveAt(min(firstItemIdx, secondItemIdx));
+    //     Node *second = retrieveAt(max(firstItemIdx, secondItemIdx));
+    //     first->next = second->next;
+    //     second->next = first;
+    //     if (firstItemIdx == 1)
+    //         head = second;
+    //     else
+    //         tail = second;
+    //     return;
+    // }
+    // Case 2.2: None of them is the head or tail
+    //     if (abs(firstItemIdx - secondItemIdx) == 1)
+    //     {
+    //         Node *first = retrieveAt(min(firstItemIdx, secondItemIdx));
+    //         Node *second = retrieveAt(max(firstItemIdx, secondItemIdx));
+    //         Node *firstPrev = retrieveAt(min(firstItemIdx, secondItemIdx) - 1);
+    //         first->next = second->next;
+    //         second->next = first;
+    //         firstPrev->next = second;
+    //         return;
+    //     }
+    // }
     /**
      * Checks if linked list is empty
      * @param {void}
@@ -227,7 +282,7 @@ public:
         while (head)
         {
             // Store the next node before deleting current
-            Node *temp = head->next;
+            Node<T> *temp = head->next;
             // Delete the current node
             delete head;
             // Move head to the next node
@@ -240,15 +295,30 @@ public:
 
 // int main()
 // {
-//     singlyLinkedList s;
-//     s.insertAtTail(1);
+//     singlyLinkedList<int> s;
 //     s.insertAtTail(2);
 //     s.insertAtTail(3);
+//     s.insertAtTail(4);
+//     s.insertAtHead(1);
+//     s.insertAt(5, 5);
+//     s.print();
 
-//     s.insertAt(5, 2);
-//     s.print();
 //     s.removeAtHead();
+//     s.removeAtTail();
 //     s.print();
-//     s.clear();
+
+//     s.removeAt(1);
 //     s.print();
+
+//     cout << "Element at index 1 is: " << s.retrieveAt(1)->data << endl;
+
+//     s.replaceAt(6, 1);
+//     s.print();
+
+//     cout << s.isExist(4) << " " << s.isExist(56) << endl;
+
+//     cout << s.isItemAtEqual(6, 1) << endl;
+
+//     cout << s.isEmpty() << endl;
+
 // }
