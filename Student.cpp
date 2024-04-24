@@ -38,3 +38,22 @@ void Selection_sort(vector<student> &items, Compare comp) {
         }
     }
 }
+
+template<typename student, typename Compare>
+
+void bubbleSort(vector<Student> &students, Compare comp) {
+    int n = students.size();
+    int i, j;
+    bool swapped;
+    for (i = 0; i < n - 1; i++) {
+        swapped = false;
+        for (j = 0; j < n - i - 1; j++) {
+            if (comp(students[j], students[j + 1])) {
+                swap(students[j], students[j + 1]);
+                swapped = true;
+            }
+        }
+        if (!swapped)
+            break;
+    }
+}
