@@ -249,6 +249,7 @@ void LinkedList<T>::swap(int firstItemIdx, int secondItemIdx) {
     }
     if (!first || !second)
         return;
+    cout << first << " " << second << "\n";
     if (first == head)
         head = second;
     else if (second == head)
@@ -272,6 +273,7 @@ void LinkedList<T>::swap(int firstItemIdx, int secondItemIdx) {
         first->prev->next = first;
     if (second->prev)
         second->prev->next = second;
+    cout << first << " " << second << "\n";
 }
 
 template<typename T>
