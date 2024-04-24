@@ -70,14 +70,6 @@ public:
         length--;
     }
 
-    void printNodeAddresses() {
-        Node<T> *current = head;
-        while (current != nullptr) {
-            cout << current << " ";
-            current = current->next;
-        }
-        cout << "\n";
-    }
 };
 
 template<typename T>
@@ -247,9 +239,11 @@ void LinkedList<T>::swap(int firstItemIdx, int secondItemIdx) {
             second = cur;
         cur = cur->next;
     }
+    cout << first << " " << second << "\n";
+    cout << first->data << " " << second->data << "\n";
+
     if (!first || !second)
         return;
-    cout << first << " " << second << "\n";
     if (first == head)
         head = second;
     else if (second == head)
@@ -274,6 +268,7 @@ void LinkedList<T>::swap(int firstItemIdx, int secondItemIdx) {
     if (second->prev)
         second->prev->next = second;
     cout << first << " " << second << "\n";
+    cout << first->data << " " << second->data << "\n";
 }
 
 template<typename T>
@@ -327,9 +322,8 @@ int main() {
     cout << "Replacing element at index 1 (1-based) with 70:\n";
     DLL.replaceAt(70, 1);
     DLL.print();
-    DLL.printNodeAddresses();
-    DLL.swap(0, 1);
-    DLL.printNodeAddresses();
+    DLL.swap(1, 2);
+    DLL.print();
     DLL.clear();
     DLL.print();    //List is empty, nothing is printed
     // must see this line, otherwise we have RTE
