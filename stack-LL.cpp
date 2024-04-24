@@ -54,21 +54,21 @@ public:
     }
 };
 
-int main()
-{
-    Stack<int> st;
-    st.push(2);
-    st.push(4);
-    st.push(6);
-    st.push(9);
-    st.push(31);
-    st.print();
-    cout << st.pop() << endl;
-    st.print();
-    cout << st.top() << endl;
-    cout << st.stackSize() << endl;
-    cout << st.isEmpty() << endl;
-    st.clear();
+// int main()
+// {
+//     Stack<int> st;
+//     st.push(2);
+//     st.push(4);
+//     st.push(6);
+//     st.push(9);
+//     st.push(31);
+//     st.print();
+//     cout << st.pop() << endl;
+//     st.print();
+//     cout << st.top() << endl;
+//     cout << st.stackSize() << endl;
+//     cout << st.isEmpty() << endl;
+//     st.clear();
 
-    return 0;
-}
+//     return 0;
+// }
