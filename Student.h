@@ -31,8 +31,10 @@ public:
     friend void Insertion_sort(vector<Student> &items, Compare comp);
 
     template<typename Student, typename Compare>
-    friend void Selection_sort(vector<Student> &students, Compare comp);
+    friend void Selection_sort(vector<Student> &items, Compare comp);
 
+    template<typename Student, typename Compare>
+    friend void bubbleSort(vector<Student> &students, Compare comp);
 };
 
 
