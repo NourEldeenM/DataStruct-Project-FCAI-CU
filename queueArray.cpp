@@ -90,15 +90,15 @@ int main()
 
     q.dequeue();
     cout << "First element after dequeue: " << q.first() << endl;
-    // q.first();
-    // q.print();
-    // q.dequeue();
-    // q.print();
-    // q.dequeue();
-    // q.print();
-    // q.dequeue();
-    // q.print();
-    // q.dequeue();
-    // q.dequeue();
+    q.first();
+    q.print();
+    q.dequeue();
+    q.print();
+    q.dequeue();
+    q.print();
+    q.dequeue();
+    q.print();
+    q.dequeue();
+    q.dequeue();
     return 0;
 }
