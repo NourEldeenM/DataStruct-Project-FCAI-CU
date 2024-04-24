@@ -27,14 +27,17 @@ public:
 
     void setGpa(double GPA) { this->gpa = GPA; }
 
-    template<typename T, typename Compare>
-    friend void Insertion_sort(vector<Student> &items, Compare comp);
+    template<typename Student, typename Compare>
+    void Insertion_sort(vector<Student> &items, Compare comp);
 
     template<typename Student, typename Compare>
     friend void Selection_sort(vector<Student> &items, Compare comp);
 
     template<typename Student, typename Compare>
     friend void bubbleSort(vector<Student> &students, Compare comp);
+
+    template<typename Student, typename Compare>
+    friend void quickSort(vector<Student> &students, Compare comp);
 };
 
 
