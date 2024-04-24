@@ -48,22 +48,56 @@ int main() {
     // example to check code
     cout << "\n";
     Selection_sort(students, CompareByGPA());
+    cout << "Algorithm: Selection Sort\n";
     cout << "*By GPA*\n";
     for (auto x: students)
         cout << x.name << '\n'
              << x.id << '\n'
              << x.gpa << "\n\n";
-    cout << "\n";
-    bubbleSort(students, CompareByName());
+    Selection_sort(students, CompareByName());
+    cout << "Algorithm: Selection Sort\n";
+    cout << "*By GPA*\n";
     for (auto x: students)
         cout << x.name << '\n'
              << x.id << '\n'
              << x.gpa << "\n\n";
-    // cout << "*By NAME*\n";
-    // Insertion_sortByname(students);
-    // for (auto x : students)
-    // cout << x.name << '\n'
-    //      << x.id << '\n'
-    //      << x.gpa << "\n\n";
+    Insertion_sort(students, CompareByName());
+    cout << "Algorithm: Insertion Sort\n";
+    cout << "*By GPA*\n";
+    for (auto x: students)
+        cout << x.name << '\n'
+             << x.id << '\n'
+             << x.gpa << "\n\n";
+    Insertion_sort(students, CompareByGPA());
+    cout << "Algorithm: Insertion Sort\n";
+    cout << "*By GPA*\n";
+    for (auto x: students)
+        cout << x.name << '\n'
+             << x.id << '\n'
+             << x.gpa << "\n\n";
+    bubbleSort(students, CompareByName());
+    cout << "Algorithm: Bubble Sort\n";
+    for (auto x: students)
+        cout << x.name << '\n'
+             << x.id << '\n'
+             << x.gpa << "\n\n";
+    bubbleSort(students, CompareByGPA());
+    cout << "Algorithm: Bubble Sort\n";
+    for (auto x: students)
+        cout << x.name << '\n'
+             << x.id << '\n'
+             << x.gpa << "\n\n";
+    quickSort(students, CompareByGPA());
+    cout << "Algorithm: Quick Sort\n";
+    for (auto x: students)
+        cout << x.name << '\n'
+             << x.id << '\n'
+             << x.gpa << "\n\n";
+    quickSort(students, CompareByName());
+    cout << "Algorithm: Quick Sort\n";
+    for (auto x: students)
+        cout << x.name << '\n'
+             << x.id << '\n'
+             << x.gpa << "\n\n";
     return 0;
 }
