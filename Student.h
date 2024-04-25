@@ -37,10 +37,16 @@ public:
     friend void Selection_sort(vector<Student> &items, Compare comp);
 
     template <typename Compare>
-    friend void bubbleSort(vector<Student> &students, Compare comp);
+    friend void bubbleSort(vector<Student> &students, Compare comp, const string &filename);
+
+    // template <typename Compare>
+    // friend void quickSort(vector<Student> &students, Compare comp, int i, int j, int &number_of_comparisons, const string &filename);
 
     template <typename Compare>
-    friend void quickSort(vector<Student> &students, Compare comp);
+    friend void quickSort(vector<Student> &students, Compare comp, const string &filename);
+
+    template <typename Compare>
+    friend void mergeSort(vector<Student> &students, Compare comp, const string &filename);
 };
 
 #endif // DATASTRUCT_PROJECT_FCAI_CU_STUDENT_H

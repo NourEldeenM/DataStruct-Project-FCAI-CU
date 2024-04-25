@@ -1,8 +1,6 @@
 #include "student.h"
 #include "compare.h"
 
-// using namespace std;
-
 vector<Student> readInputFromFile()
 {
     vector<Student> students;
@@ -64,34 +62,15 @@ int main()
         cout << x.name << '\n'
              << x.id << '\n'
              << x.gpa << "\n\n";
-    bubbleSort(students, CompareByGPA());
-    cout << "Algorithm: Bubble Sort\n";
-    cout << "*By GPA*\n";
-    for (auto x : students)
-        cout << x.name << '\n'
-             << x.id << '\n'
-             << x.gpa << "\n\n";
-    bubbleSort(students, CompareByName());
-    cout << "Algorithm: Bubble Sort\n";
-    cout << "*By Name*\n";
-    cout << "*By GPA*\n";
-    for (auto x : students)
-        cout << x.name << '\n'
-             << x.id << '\n'
-             << x.gpa << "\n\n";
 
-    quickSort(students, CompareByGPA());
-    cout << "Algorithm: Quick Sort\n";
-    for (auto x : students)
-        cout << x.name << '\n'
-             << x.id << '\n'
-             << x.gpa << "\n\n";
-    quickSort(students, CompareByName());
-    cout << "Algorithm: Quick Sort\n";
-    cout << "*By Name*\n";
-    for (auto x : students)
-        cout << x.name << '\n'
-             << x.id << '\n'
-             << x.gpa << "\n\n";
+    bubbleSort(students, CompareByGPA(), "SortedByGPA.txt");
+    bubbleSort(students, CompareByName(), "SortedByName.txt");
+
+    quickSort(students, CompareByGPA(), "SortedByGPA.txt");
+    quickSort(students, CompareByName(), "SortedByName.txt");
+
+    mergeSort(students, CompareByGPA(), "SortedByGPA.txt");
+    mergeSort(students, CompareByName(), "SortedByName.txt");
+
     return 0;
 }
