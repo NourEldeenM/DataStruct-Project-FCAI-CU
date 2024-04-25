@@ -68,7 +68,7 @@ public:
 //     cout << st.top() << endl;
 //     cout << st.stackSize() << endl;
 //     cout << st.isEmpty() << endl;
-//     st.clear(); 
+//     st.clear();
 
 //     return 0;
 // }

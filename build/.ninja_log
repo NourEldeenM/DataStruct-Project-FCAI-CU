@@ -1,0 +1,13 @@
+# ninja log v5
+21	2220	7357080023594630	CMakeFiles/SortLibrary.dir/student.cpp.obj	62befa666c03e05e
+1882	2061	7357082873173526	DataStructureSortFunctions.exe	eeedd7cf1ec760c0
+26	1881	7357082871498843	CMakeFiles/DataStructureSortFunctions.dir/main.cpp.obj	b2dc716ff3ae8165
+2222	2342	7357080024802768	libSortLibrary.a	6d8af6a8d351b5cc
+8	2274	7357092046017841	CMakeFiles/DataStructureSortFunctions.dir/main.cpp.obj	b2dc716ff3ae8165
+33	2401	7357092218623339	CMakeFiles/DataStructureSortFunctions.dir/main.cpp.obj	b2dc716ff3ae8165
+29	2104	7357092538774862	CMakeFiles/DataStructureSortFunctions.dir/main.cpp.obj	b2dc716ff3ae8165
+2105	2308	7357092540681687	DataStructureSortFunctions.exe	eeedd7cf1ec760c0
+35	2872	7357093399708938	CMakeFiles/DataStructureSortFunctions.dir/main.cpp.obj	b2dc716ff3ae8165
+29	2888	7357093399878940	CMakeFiles/SortLibrary.dir/student.cpp.obj	62befa666c03e05e
+2888	3063	7357093401558967	libSortLibrary.a	6d8af6a8d351b5cc
+3063	3240	7357093403297112	DataStructureSortFunctions.exe	eeedd7cf1ec760c0

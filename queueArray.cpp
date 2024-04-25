@@ -31,9 +31,9 @@ void Queue<dataType>::print()
     }
     for (size_t i = front; i <= rear; i++)
     {
-        cout<<arr[i]<<' ';
+        cout << arr[i] << ' ';
     }
-    
+
     cout << '\n';
 }
 
