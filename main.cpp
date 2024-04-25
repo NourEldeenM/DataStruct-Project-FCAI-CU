@@ -1,4 +1,3 @@
-// #include <bits/stdc++.h>
 #include "student.h"
 #include "compare.h"
 

@@ -1,7 +1,7 @@
 #ifndef COMPARE_H
 #define COMPARE_H
 
-#include "student.h" // Include student.h to make Student class definition visible
+#include "student.h"
 
 class CompareByGPA
 {
