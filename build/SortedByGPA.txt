@@ -1,6 +1,139 @@
 Algorithm name: Insertion Sort
 Number of Comparisons equals: 3
+Time taken by algorithm: 5 microseconds
+Mohamed Kamal
+97848
+2.2
+
+Sara Ahmed
+78697
+3.1
+
+Ali
+3541
+3.5
+
+Mariam
+69712
+3.7
+
+Algorithm name: Selection Sort
+Number of Comparisons equals: 6
+Time taken by algorithm: 5 microseconds
+Mohamed Kamal
+97848
+2.2
+
+Sara Ahmed
+78697
+3.1
+
+Ali
+3541
+3.5
+
+Mariam
+69712
+3.7
+
+Algorithm name: Bubble Sort
+Number of Comparisons equals: 6
+Time taken by algorithm: 2 microseconds
+Mohamed Kamal
+97848
+2.2
+
+Sara Ahmed
+78697
+3.1
+
+Ali
+3541
+3.5
+
+Mariam
+69712
+3.7
+
+Algorithm name: Quick Sort
+Number of Comparisons equals: 2
+Time taken by algorithm: 94 microseconds
+Mohamed Kamal
+97848
+2.2
+
+Sara Ahmed
+78697
+3.1
+
+Ali
+3541
+3.5
+
+Mariam
+69712
+3.7
+
+Algorithm name: Merge Sort
+Number of Comparisons equals: 4
 Time taken by algorithm: 6 microseconds
+Mohamed Kamal
+97848
+2.2
+
+Sara Ahmed
+78697
+3.1
+
+Ali
+3541
+3.5
+
+Mariam
+69712
+3.7
+
+Algorithm name: Shell Sort
+Number of Comparisons equals: 2
+Time taken by algorithm: 1 microseconds
+Mohamed Kamal
+97848
+2.2
+
+Sara Ahmed
+78697
+3.1
+
+Ali
+3541
+3.5
+
+Mariam
+69712
+3.7
+
+Algorithm name: Count Sort
+Number of Comparisons equals: 0
+Time taken by algorithm: 15 microseconds
+Mohamed Kamal
+97848
+2.2
+
+Sara Ahmed
+78697
+3.1
+
+Ali
+3541
+3.5
+
+Mariam
+69712
+3.7
+
+Algorithm name: Insertion Sort
+Number of Comparisons equals: 3
+Time taken by algorithm: 5 microseconds
 Mohamed Kamal
 97848
 2.2
@@ -38,7 +171,7 @@ Mariam
 
 Algorithm name: Bubble Sort
 Number of Comparisons equals: 6
-Time taken by algorithm: 9 microseconds
+Time taken by algorithm: 1 microseconds
 Mohamed Kamal
 97848
 2.2
@@ -57,7 +190,7 @@ Mariam
 
 Algorithm name: Quick Sort
 Number of Comparisons equals: 2
-Time taken by algorithm: 235 microseconds
+Time taken by algorithm: 174 microseconds
 Mohamed Kamal
 97848
 2.2
@@ -76,7 +209,7 @@ Mariam
 
 Algorithm name: Merge Sort
 Number of Comparisons equals: 4
-Time taken by algorithm: 7 microseconds
+Time taken by algorithm: 12 microseconds
 Mohamed Kamal
 97848
 2.2
@@ -95,7 +228,7 @@ Mariam
 
 Algorithm name: Shell Sort
 Number of Comparisons equals: 2
-Time taken by algorithm: 1 microseconds
+Time taken by algorithm: 6 microseconds
 Mohamed Kamal
 97848
 2.2
@@ -119,25 +252,6 @@ Mohamed Kamal
 97848
 2.2
 
-Ali
-3541
-3.5
-
-Mariam
-69712
-3.7
-
-Sara Ahmed
-78697
-3.1
-
-Algorithm name: Insertion Sort
-Number of Comparisons equals: 3
-Time taken by algorithm: 6 microseconds
-Mohamed Kamal
-97848
-2.2
-
 Sara Ahmed
 78697
 3.1
@@ -149,118 +263,4 @@ Ali
 Mariam
 69712
 3.7
-
-Algorithm name: Selection Sort
-Number of Comparisons equals: 6
-Time taken by algorithm: 1 microseconds
-Mohamed Kamal
-97848
-2.2
-
-Sara Ahmed
-78697
-3.1
-
-Ali
-3541
-3.5
-
-Mariam
-69712
-3.7
-
-Algorithm name: Bubble Sort
-Number of Comparisons equals: 6
-Time taken by algorithm: 3 microseconds
-Mohamed Kamal
-97848
-2.2
-
-Sara Ahmed
-78697
-3.1
-
-Ali
-3541
-3.5
-
-Mariam
-69712
-3.7
-
-Algorithm name: Quick Sort
-Number of Comparisons equals: 2
-Time taken by algorithm: 100 microseconds
-Mohamed Kamal
-97848
-2.2
-
-Sara Ahmed
-78697
-3.1
-
-Ali
-3541
-3.5
-
-Mariam
-69712
-3.7
-
-Algorithm name: Merge Sort
-Number of Comparisons equals: 4
-Time taken by algorithm: 5 microseconds
-Mohamed Kamal
-97848
-2.2
-
-Sara Ahmed
-78697
-3.1
-
-Ali
-3541
-3.5
-
-Mariam
-69712
-3.7
-
-Algorithm name: Shell Sort
-Number of Comparisons equals: 2
-Time taken by algorithm: 3 microseconds
-Mohamed Kamal
-97848
-2.2
-
-Sara Ahmed
-78697
-3.1
-
-Ali
-3541
-3.5
-
-Mariam
-69712
-3.7
-
-Algorithm name: Count Sort
-Number of Comparisons equals: 0
-Time taken by algorithm: 8 microseconds
-Mohamed Kamal
-97848
-2.2
-
-Ali
-3541
-3.5
-
-Mariam
-69712
-3.7
-
-Sara Ahmed
-78697
-3.1
 

@@ -391,32 +391,40 @@ void countSortFull(vector<Student> &students, Compare comp, const string &filena
 {
     int size = students.size();
 
-    int mxVal = static_cast<int>(students[0].gpa);
+    double mxVal = students[0].gpa;
+    double mnVal = students[0].gpa;
     for (int i = 1; i < size; ++i)
     {
-        if (static_cast<int>(students[i].gpa) > mxVal)
+        if (students[i].gpa > mxVal)
         {
-            mxVal = static_cast<int>(students[i].gpa);
+            mxVal = students[i].gpa;
+        }
+        if (students[i].gpa < mnVal)
+        {
+            mnVal = students[i].gpa;
         }
     }
 
-    vector<int> count(mxVal + 1, 0);
+    int range = static_cast<int>(mxVal - mnVal) + 1;
+
+    vector<int> count(range, 0);
 
     for (int i = 0; i < size; ++i)
     {
-        count[static_cast<int>(students[i].gpa)] += 1;
+        count[static_cast<int>(students[i].gpa - mnVal)] += 1;
     }
 
-    for (int i = 1; i <= mxVal; ++i)
+    for (int i = 1; i < range; ++i)
     {
         count[i] += count[i - 1];
     }
 
     vector<Student> output(size);
+
     for (int i = size - 1; i >= 0; --i)
     {
-        output[count[static_cast<int>(students[i].gpa)] - 1] = students[i];
-        count[static_cast<int>(students[i].gpa)] -= 1;
+        output[count[static_cast<int>(students[i].gpa - mnVal)] - 1] = students[i];
+        count[static_cast<int>(students[i].gpa - mnVal)] -= 1;
     }
 
     students = output;
@@ -467,3 +475,28 @@ template void shellSort(vector<Student> &, CompareByName, const string &filename
 
 template void countSort(vector<Student> &, CompareByGPA, const string &filename);
 template void countSort(vector<Student> &, CompareByName, const string &filename);
+
+vector<Student> readInputFromFile()
+{
+    vector<Student> students;
+    ifstream fin("students.txt");
+    if (fin.fail())
+    {
+        cout << "Error opening file\n";
+        return students;
+    }
+    int num_Students;
+    fin >> num_Students;
+    fin.ignore(numeric_limits<streamsize>::max(), '\n');
+    for (int i = 0; i < num_Students; ++i)
+    {
+        Student student;
+        getline(fin, student.name);
+        fin >> student.id;
+        fin >> student.gpa;
+        fin.ignore(numeric_limits<streamsize>::max(), '\n');
+        students.push_back(student);
+    }
+    fin.close();
+    return students;
+}

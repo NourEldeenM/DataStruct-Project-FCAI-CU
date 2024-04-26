@@ -21,4 +21,6 @@ public:
     }
 };
 
+
+
 #endif // COMPARE_H

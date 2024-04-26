@@ -1,30 +1,7 @@
 #include "student.h"
 #include "compare.h"
 
-vector<Student> readInputFromFile()
-{
-    vector<Student> students;
-    ifstream fin("students.txt");
-    if (fin.fail())
-    {
-        cout << "Error opening file\n";
-        return students;
-    }
-    int num_Students;
-    fin >> num_Students;
-    fin.ignore(numeric_limits<streamsize>::max(), '\n');
-    for (int i = 0; i < num_Students; ++i)
-    {
-        Student student;
-        getline(fin, student.name);
-        fin >> student.id;
-        fin >> student.gpa;
-        fin.ignore(numeric_limits<streamsize>::max(), '\n');
-        students.push_back(student);
-    }
-    fin.close();
-    return students;
-}
+vector<Student> readInputFromFile();
 
 int main()
 {
