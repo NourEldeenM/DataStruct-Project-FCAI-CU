@@ -299,7 +299,8 @@ void shellSortFull(vector<Student> &students, Compare comp, int &number_of_compa
             Student temp = students[i];
             int j;
 
-            for (j = i; j >= gap && comp(students[j - gap], temp); j -= gap)
+            // for (j = i; j >= gap && comp(students[j - gap], temp); j -= gap)
+            for (j = i; j >= gap && comp(temp, students[j - gap]); j -= gap)
             {
                 number_of_comparisons++;
                 students[j] = students[j - gap];

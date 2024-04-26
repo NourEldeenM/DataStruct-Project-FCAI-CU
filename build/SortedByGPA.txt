@@ -1,6 +1,6 @@
 Algorithm name: Bubble Sort
 Number of Comparisons equals: 6
-Time taken by algorithm: 5 microseconds
+Time taken by algorithm: 4 microseconds
 Mohamed Kamal
 97848
 2.2
@@ -19,7 +19,7 @@ Mariam
 
 Algorithm name: Quick Sort
 Number of Comparisons equals: 2
-Time taken by algorithm: 130 microseconds
+Time taken by algorithm: 92 microseconds
 Mohamed Kamal
 97848
 2.2
@@ -38,7 +38,7 @@ Mariam
 
 Algorithm name: Merge Sort
 Number of Comparisons equals: 4
-Time taken by algorithm: 14 microseconds
+Time taken by algorithm: 6 microseconds
 Mohamed Kamal
 97848
 2.2
@@ -58,19 +58,19 @@ Mariam
 Algorithm name: Shell Sort
 Number of Comparisons equals: 2
 Time taken by algorithm: 0 microseconds
-Mariam
-69712
-3.7
-
-Ali
-3541
-3.5
+Mohamed Kamal
+97848
+2.2
 
 Sara Ahmed
 78697
 3.1
 
-Mohamed Kamal
-97848
-2.2
+Ali
+3541
+3.5
+
+Mariam
+69712
+3.7
 
