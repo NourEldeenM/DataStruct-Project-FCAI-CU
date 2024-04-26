@@ -8,6 +8,7 @@ struct Node
     /* data */
     T data;
     Node *next = nullptr;
+
     Node(T data) : data(data) {}
 };
 
@@ -31,6 +32,7 @@ public:
             cout << curr->data << ' ';
         cout << '\n';
     }
+
     /**
      * Inserts an element to the front of the SLL.
      * @param {value} int : the element to be inserted
@@ -43,6 +45,7 @@ public:
         head = item;
         length++;
     }
+
     /**
      * Inserts an element to the end of the SLL.
      * @param {value} int : the element to be inserted
@@ -60,6 +63,7 @@ public:
         }
         length++;
     }
+
     /**
      * Inserts an element in the index
      * @param {value} int : the element to be inserted
@@ -94,6 +98,7 @@ public:
             }
         }
     }
+
     /**
      * Removes first element
      * @param {void}
@@ -106,6 +111,7 @@ public:
         delete dummy;
         length--;
     }
+
     /**
      * Removes last element
      * @param {void}
@@ -120,6 +126,7 @@ public:
         tail->next = nullptr;
         length--;
     }
+
     /**
      * Removes element found at certain index
      * @param {index} int : index of element to be removed (1 based)
@@ -140,6 +147,7 @@ public:
             delete dummy;
         }
     }
+
     /**
      * Get the Node found at certain index
      * @param {index} int : position of node to be returned
@@ -158,6 +166,7 @@ public:
         }
         return nullptr;
     }
+
     /**
      * Get the Node found at certain index
      * @param {value} int : new value to be replaced instead of old one
@@ -178,6 +187,7 @@ public:
             }
         }
     }
+
     /**
      * Checks if a value is found inside the list or not
      * @param {value} int : value to search for
@@ -190,6 +200,7 @@ public:
                 return true;
         return false;
     }
+
     /**
      * Checks if node found at certain index has a certain value or not
      * @param {element} int : value to search for
@@ -209,68 +220,68 @@ public:
         }
         return false;
     }
+
     /**
      * Swaps two nodes without swapping data
      * @param {firstItemIdx} int : index of first node (1 based)
      * @param {secondItemIdx} int : index of second node (1 based)
      * @returns {void}
      */
-    // Not yet
-    // void swap(int firstItemIdx, int secondItemIdx)
-    // {
-    // Case 1: Indices out of range
+    void swap(int firstItemIdx, int secondItemIdx)
+    {
+        if (head == nullptr || head->next == nullptr || firstItemIdx == secondItemIdx ||
+            firstItemIdx > length || secondItemIdx > length || firstItemIdx < 0 || secondItemIdx < 0)
+            return;
+        int cnt = 0;
+        Node<T> *cur = head;
+        Node<T> *prevFirst = nullptr, *prevSecond = nullptr;
+        Node<T> *first = nullptr;
+        Node<T> *second = nullptr;
+        while (cur)
+        {
+            if (++cnt == firstItemIdx)
+                first = cur;
+            prevFirst = first, cur = cur->next;
+        }
+        cnt = 0;
+        cur = head;
+        while (cur)
+        {
+            if (++cnt == secondItemIdx)
+                second = cur;
+            prevSecond = second, cur = cur->next;
+        }
+        if (!first || !second)
+            return;
+        // If first node to be swapped is not the head
+        if (prevFirst)
+            prevFirst->next = second;
+        else // if it is the head
+            head = second;
+        // If second node to be swapped is not the head
+        if (prevSecond)
+            prevSecond->next = first;
+        else // if it is the head
+            head = first;
+        Node<T> *temp = second->next;
+        second->next = first->next;
+        first->next = temp;
+    }
 
-    // Case 2: first & second items are adjacent to each other
-    // Case 2.1: One of them is the head
-    // Case 2.2: None of them is the head or tail
-
-    // Case 3: first & second items are not adjacent
-    // Case 3.1: One of the is the head
-    // Case 3.2: None of them is head or tail
-    /*************************************************************/
-
-    // Case 1: Indices out of range
-    // if (firstItemIdx > length || secondItemIdx > length || firstItemIdx < 0 || secondItemIdx < 0 || firstItemIdx == secondItemIdx)
-    //     return;
-
-    // Case 2: first & second items are adjacent to each other
-    // Case 2.1: One of them is the head or tail
-    // if (abs(firstItemIdx - secondItemIdx) == 1)
-    // {
-    //     Node *first = retrieveAt(min(firstItemIdx, secondItemIdx));
-    //     Node *second = retrieveAt(max(firstItemIdx, secondItemIdx));
-    //     first->next = second->next;
-    //     second->next = first;
-    //     if (firstItemIdx == 1)
-    //         head = second;
-    //     else
-    //         tail = second;
-    //     return;
-    // }
-    // Case 2.2: None of them is the head or tail
-    //     if (abs(firstItemIdx - secondItemIdx) == 1)
-    //     {
-    //         Node *first = retrieveAt(min(firstItemIdx, secondItemIdx));
-    //         Node *second = retrieveAt(max(firstItemIdx, secondItemIdx));
-    //         Node *firstPrev = retrieveAt(min(firstItemIdx, secondItemIdx) - 1);
-    //         first->next = second->next;
-    //         second->next = first;
-    //         firstPrev->next = second;
-    //         return;
-    //     }
-    // }
     /**
      * Checks if linked list is empty
      * @param {void}
      * @returns {bool} true if empty, false otherwise
      */
     bool isEmpty() { return (length == 0) ? true : false; }
+
     /**
      * returns size of linked list
      * @param {void}
      * @returns {int} size
      */
     int linkedListSize() { return length; }
+
     /**
      * removes all elements
      * @param {void}

@@ -391,26 +391,23 @@ void countSortFull(vector<Student> &students, Compare comp, const string &filena
 {
     int size = students.size();
 
-    float mxVal = students[0].gpa;
+    int mxVal = static_cast<int>(students[0].gpa);
     for (int i = 1; i < size; ++i)
     {
-        if (students[i].gpa > mxVal)
+        if (static_cast<int>(students[i].gpa) > mxVal)
         {
-            mxVal = students[i].gpa;
+            mxVal = static_cast<int>(students[i].gpa);
         }
     }
 
-    int intMaxGPA = static_cast<int>(mxVal);
-
-    // Initialize the counting array with zeros
-    vector<int> count(intMaxGPA + 1, 0);
+    vector<int> count(mxVal + 1, 0);
 
     for (int i = 0; i < size; ++i)
     {
         count[static_cast<int>(students[i].gpa)] += 1;
     }
 
-    for (int i = 1; i <= intMaxGPA; ++i)
+    for (int i = 1; i <= mxVal; ++i)
     {
         count[i] += count[i - 1];
     }

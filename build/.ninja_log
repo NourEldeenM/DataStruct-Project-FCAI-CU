@@ -1,22 +1,15 @@
 # ninja log v5
 17	2052	7358200526513894	CMakeFiles/SortLibrary.dir/student.cpp.obj	62befa666c03e05e
-2131	2237	7358200528305491	DataStructureSortFunctions.exe	eeedd7cf1ec760c0
-20	1981	7358200525799447	CMakeFiles/DataStructureSortFunctions.dir/main.cpp.obj	b2dc716ff3ae8165
-2053	2131	7358200527302275	libSortLibrary.a	6d8af6a8d351b5cc
+2338	2455	7358636737801424	DataStructureSortFunctions.exe	eeedd7cf1ec760c0
+64	1995	7358636733259722	CMakeFiles/DataStructureSortFunctions.dir/main.cpp.obj	b2dc716ff3ae8165
+2258	2338	7358636736685941	libSortLibrary.a	7597db35edf02766
+58	2258	7358636735878686	CMakeFiles/SortLibrary.dir/Student.cpp.obj	2bf67b22dd570728
 32	144	7357600531449828	SortedByGPA.txt	fe2ca3fc45ae3d63
 32	144	7357600531449828	SortedByName.txt	fe2ca3fc45ae3d63
 32	144	7357600531449828	E:/Semester 4/Data Structures/Assignments/Assignment 1/Repo/DataStruct-Project-FCAI-CU/build/SortedByGPA.txt	fe2ca3fc45ae3d63
 32	144	7357600531449828	E:/Semester 4/Data Structures/Assignments/Assignment 1/Repo/DataStruct-Project-FCAI-CU/build/SortedByName.txt	fe2ca3fc45ae3d63
 5158	5588	7357602250752705	bin/DataStructureSortFunctions.exe	7ea4cf80becbe454
-13	2030	7358632396819922	CMakeFiles/DataStructureSortFunctions.dir/main.cpp.obj	b2dc716ff3ae8165
-9	2242	7358632398948597	CMakeFiles/SortLibrary.dir/Student.cpp.obj	2bf67b22dd570728
-2242	2455	7358632401074363	libSortLibrary.a	7597db35edf02766
-2456	2710	7358632403566185	DataStructureSortFunctions.exe	eeedd7cf1ec760c0
-22	1932	7358634699877541	CMakeFiles/DataStructureSortFunctions.dir/main.cpp.obj	b2dc716ff3ae8165
-18	2143	7358634701976733	CMakeFiles/SortLibrary.dir/Student.cpp.obj	2bf67b22dd570728
-2143	2255	7358634703100921	libSortLibrary.a	7597db35edf02766
-2255	2372	7358634704218717	DataStructureSortFunctions.exe	eeedd7cf1ec760c0
-64	1995	7358636733259722	CMakeFiles/DataStructureSortFunctions.dir/main.cpp.obj	b2dc716ff3ae8165
-58	2258	7358636735878686	CMakeFiles/SortLibrary.dir/Student.cpp.obj	2bf67b22dd570728
-2258	2338	7358636736685941	libSortLibrary.a	7597db35edf02766
-2338	2455	7358636737801424	DataStructureSortFunctions.exe	eeedd7cf1ec760c0
+20	2030	7358640998794220	CMakeFiles/DataStructureSortFunctions.dir/main.cpp.obj	b2dc716ff3ae8165
+17	2246	7358641000948371	CMakeFiles/SortLibrary.dir/Student.cpp.obj	2bf67b22dd570728
+2246	2332	7358641001818259	libSortLibrary.a	7597db35edf02766
+2332	2454	7358641002973315	DataStructureSortFunctions.exe	eeedd7cf1ec760c0

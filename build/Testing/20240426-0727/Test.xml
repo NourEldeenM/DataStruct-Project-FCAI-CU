@@ -18,17 +18,17 @@
 	ProcessorCacheSize="0"
 	NumberOfLogicalCPU="8"
 	NumberOfPhysicalCPU="4"
-	TotalVirtualMemory="17142"
+	TotalVirtualMemory="19216"
 	TotalPhysicalMemory="16118"
 	LogicalProcessorsPerPhysical="2"
 	ProcessorClockFrequency="2803"
 	>
 	<Testing>
-		<StartDateTime>Apr 26 22:25 Egypt Daylight Time</StartDateTime>
-		<StartTestTime>1714159518</StartTestTime>
+		<StartDateTime>Apr 26 22:47 Egypt Daylight Time</StartDateTime>
+		<StartTestTime>1714160869</StartTestTime>
 		<TestList/>
-		<EndDateTime>Apr 26 22:25 Egypt Daylight Time</EndDateTime>
-		<EndTestTime>1714159518</EndTestTime>
+		<EndDateTime>Apr 26 22:47 Egypt Daylight Time</EndDateTime>
+		<EndTestTime>1714160869</EndTestTime>
 		<ElapsedMinutes>0</ElapsedMinutes>
 	</Testing>
 </Site>
