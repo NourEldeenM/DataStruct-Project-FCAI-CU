@@ -292,13 +292,14 @@ void mergeSort(vector<Student> &students, Compare comp, const string &filename)
 template <typename Compare>
 void shellSortFull(vector<Student> &students, Compare comp, int &number_of_comparisons, const string &filename)
 {
-    for (int gap = students.size(); gap > 0; gap /= 2)
+    for (int gap = students.size() / 2; gap > 0; gap /= 2)
     {
         for (int i = gap; i < students.size(); i++)
         {
-            Compare temp = students[i];
+            Student temp = students[i];
+            int j;
 
-            for (int j = i; j >= gap && comp(students[j - gap], temp); j -= gap)
+            for (j = i; j >= gap && comp(students[j - gap], temp); j -= gap)
             {
                 number_of_comparisons++;
                 students[j] = students[j - gap];
@@ -348,3 +349,6 @@ template void quickSort(vector<Student> &, CompareByName, const string &filename
 
 template void mergeSort(vector<Student> &, CompareByGPA, const string &filename);
 template void mergeSort(vector<Student> &, CompareByName, const string &filename);
+
+template void shellSort(vector<Student> &, CompareByGPA, const string &filename);
+template void shellSort(vector<Student> &, CompareByName, const string &filename);

@@ -71,9 +71,9 @@ int main()
 
     mergeSort(students, CompareByGPA(), "SortedByGPA.txt");
     mergeSort(students, CompareByName(), "SortedByName.txt");
-    
+
     shellSort(students, CompareByGPA(), "SortedByGPA.txt");
-    shellSort(students, CompareByGPA(), "SortedByGPA.txt");
+    shellSort(students, CompareByName(), "SortedByName.txt");
 
     return 0;
 }
