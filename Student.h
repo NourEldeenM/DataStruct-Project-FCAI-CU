@@ -47,6 +47,9 @@ public:
 
     template <typename Compare>
     friend void mergeSort(vector<Student> &students, Compare comp, const string &filename);
+
+    template <typename Compare>
+    friend void shellSort(vector<Student> &students, Compare comp, const string &filename);
 };
 
 #endif // DATASTRUCT_PROJECT_FCAI_CU_STUDENT_H

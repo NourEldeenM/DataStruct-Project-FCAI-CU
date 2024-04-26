@@ -289,6 +289,51 @@ void mergeSort(vector<Student> &students, Compare comp, const string &filename)
     }
 }
 
+template <typename Compare>
+void shellSortFull(vector<Student> &students, Compare comp, int &number_of_comparisons, const string &filename)
+{
+    for (int gap = students.size(); gap > 0; gap /= 2)
+    {
+        for (int i = gap; i < students.size(); i++)
+        {
+            Compare temp = students[i];
+
+            for (int j = i; j >= gap && comp(students[j - gap], temp); j -= gap)
+            {
+                number_of_comparisons++;
+                students[j] = students[j - gap];
+            }
+            students[j] = temp;
+        }
+    }
+}
+
+template <typename Compare>
+void shellSort(vector<Student> &students, Compare comp, const string &filename)
+{
+    ofstream outputFile(filename, ios::app);
+    if (!outputFile.is_open())
+    {
+        cerr << "Error: Unable to open file for writing: " << filename << endl;
+        return;
+    }
+    outputFile << "Algorithm name: Shell Sort\n";
+    auto start = high_resolution_clock::now();
+    int number_of_comparisons = 0;
+    shellSortFull(students, comp, number_of_comparisons, filename);
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    outputFile << "Number of Comparisons equals: " << number_of_comparisons << endl;
+    outputFile << "Time taken by algorithm: "
+               << duration.count() << " microseconds" << endl;
+    for (const auto &student : students)
+    {
+        outputFile << student.name << '\n'
+                   << student.id << '\n'
+                   << student.gpa << "\n\n";
+    }
+}
+
 template void Insertion_sort(vector<Student> &, CompareByGPA);
 template void Insertion_sort(vector<Student> &, CompareByName);
 
