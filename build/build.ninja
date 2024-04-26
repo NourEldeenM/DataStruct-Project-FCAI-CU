@@ -49,8 +49,8 @@ cmake_ninja_workdir = E$:/Semester$ 4/Data$ Structures/Assignments/Assignment$ 1
 
 build cmake_object_order_depends_target_SortLibrary: phony || CMakeFiles/SortLibrary.dir
 
-build CMakeFiles/SortLibrary.dir/student.cpp.obj: CXX_COMPILER__SortLibrary_unscanned_Debug E$:/Semester$ 4/Data$ Structures/Assignments/Assignment$ 1/Repo/DataStruct-Project-FCAI-CU/student.cpp || cmake_object_order_depends_target_SortLibrary
-  DEP_FILE = CMakeFiles\SortLibrary.dir\student.cpp.obj.d
+build CMakeFiles/SortLibrary.dir/Student.cpp.obj: CXX_COMPILER__SortLibrary_unscanned_Debug E$:/Semester$ 4/Data$ Structures/Assignments/Assignment$ 1/Repo/DataStruct-Project-FCAI-CU/Student.cpp || cmake_object_order_depends_target_SortLibrary
+  DEP_FILE = CMakeFiles\SortLibrary.dir\Student.cpp.obj.d
   FLAGS = -g
   OBJECT_DIR = CMakeFiles\SortLibrary.dir
   OBJECT_FILE_DIR = CMakeFiles\SortLibrary.dir
@@ -63,7 +63,7 @@ build CMakeFiles/SortLibrary.dir/student.cpp.obj: CXX_COMPILER__SortLibrary_unsc
 #############################################
 # Link the static library libSortLibrary.a
 
-build libSortLibrary.a: CXX_STATIC_LIBRARY_LINKER__SortLibrary_Debug CMakeFiles/SortLibrary.dir/student.cpp.obj
+build libSortLibrary.a: CXX_STATIC_LIBRARY_LINKER__SortLibrary_Debug CMakeFiles/SortLibrary.dir/Student.cpp.obj
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles\SortLibrary.dir
   POST_BUILD = cd .

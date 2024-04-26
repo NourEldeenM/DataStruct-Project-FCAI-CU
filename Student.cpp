@@ -49,35 +49,86 @@ void Student::setGpa(double GPA)
 
 // Insertion Sort
 template <typename Compare>
-void Insertion_sort(vector<Student> &items, Compare comp)
+void insertionSort(vector<Student> &students, Compare comp, const string &filename)
 {
-    for (int i = 1, j; i < items.size(); i++)
+    ofstream outputFile(filename, ios::app);
+    if (!outputFile.is_open())
     {
-        Student tmp = items[i];
-        for (j = i; j >= 0 && comp(tmp, items[j - 1]); j--)
-            items[j] = items[j - 1];
-        items[j] = tmp;
+        cerr << "Error: Unable to open file for writing: "
+             << "\n";
+        return;
+    }
+
+    outputFile << "Algorithm name: Insertion Sort\n";
+    auto start = high_resolution_clock::now();
+    int number_of_comparisons = 0;
+    for (int i = 1, j; i < students.size(); i++)
+    {
+        Student tmp = students[i];
+        for (j = i; j >= 0 && comp(tmp, students[j - 1]); j--)
+        {
+            number_of_comparisons++;
+            students[j] = students[j - 1];
+        }
+        students[j] = tmp;
+    }
+    outputFile << "Number of Comparisons equals: " << number_of_comparisons << "\n";
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    outputFile << "Time taken by algorithm: "
+               << duration.count() << " microseconds"
+               << "\n";
+    for (const auto &student : students)
+    {
+        outputFile << student.name << '\n'
+                   << student.id << '\n'
+                   << student.gpa << "\n\n";
     }
 }
 
 // Selection Sort
 template <typename Compare>
-void Selection_sort(vector<Student> &items, Compare comp)
+void selectionSort(vector<Student> &students, Compare comp, const string &filename)
 {
-    for (int i = 0; i < items.size() - 1; i++)
+    ofstream outputFile(filename, ios::app);
+    if (!outputFile.is_open())
+    {
+        cerr << "Error: Unable to open file for writing: "
+             << "\n";
+        return;
+    }
+
+    outputFile << "Algorithm name: Selection Sort\n";
+    auto start = high_resolution_clock::now();
+    int number_of_comparisons = 0;
+
+    for (int i = 0; i < students.size() - 1; i++)
     {
         int minIndex = i;
-        for (int j = i + 1; j < items.size(); j++)
+        for (int j = i + 1; j < students.size(); j++)
         {
-            if (comp(items[j], items[minIndex]))
+            number_of_comparisons++;
+            if (comp(students[j], students[minIndex]))
             {
                 minIndex = j;
             }
         }
         if (minIndex != i)
         {
-            swap(items[i], items[minIndex]);
+            swap(students[i], students[minIndex]);
         }
+    }
+    outputFile << "Number of Comparisons equals: " << number_of_comparisons << "\n";
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    outputFile << "Time taken by algorithm: "
+               << duration.count() << " microseconds"
+               << "\n";
+    for (const auto &student : students)
+    {
+        outputFile << student.name << '\n'
+                   << student.id << '\n'
+                   << student.gpa << "\n\n";
     }
 }
 
@@ -105,8 +156,6 @@ void bubbleSort(vector<Student> &students, Compare comp, const string &filename)
         for (j = 0; j < n - i - 1; j++)
         {
             number_of_comparisons++;
-            // This is the original condition it should work but it sorts the students in descending order
-            // if (comp(students[j], students[j + 1]))
 
             if (comp(students[j + 1], students[j]))
             {
@@ -336,11 +385,76 @@ void shellSort(vector<Student> &students, Compare comp, const string &filename)
     }
 }
 
-template void Insertion_sort(vector<Student> &, CompareByGPA);
-template void Insertion_sort(vector<Student> &, CompareByName);
+// Count Sort
+template <typename Compare>
+void countSortFull(vector<Student> &students, Compare comp, const string &filename)
+{
+    int size = students.size();
 
-template void Selection_sort(vector<Student> &, CompareByGPA);
-template void Selection_sort(vector<Student> &, CompareByName);
+    float mxVal = students[0].gpa;
+    for (int i = 1; i < size; ++i)
+    {
+        if (students[i].gpa > mxVal)
+        {
+            mxVal = students[i].gpa;
+        }
+    }
+
+    int intMaxGPA = static_cast<int>(mxVal);
+
+    // Initialize the counting array with zeros
+    vector<int> count(intMaxGPA + 1, 0);
+
+    for (int i = 0; i < size; ++i)
+    {
+        count[static_cast<int>(students[i].gpa)] += 1;
+    }
+
+    for (int i = 1; i <= intMaxGPA; ++i)
+    {
+        count[i] += count[i - 1];
+    }
+
+    vector<Student> output(size);
+    for (int i = size - 1; i >= 0; --i)
+    {
+        output[count[static_cast<int>(students[i].gpa)] - 1] = students[i];
+        count[static_cast<int>(students[i].gpa)] -= 1;
+    }
+
+    students = output;
+}
+
+template <typename Compare>
+void countSort(vector<Student> &students, Compare comp, const string &filename)
+{
+    ofstream outputFile(filename, ios::app);
+    if (!outputFile.is_open())
+    {
+        cerr << "Error: Unable to open file for writing: " << filename << endl;
+        return;
+    }
+    outputFile << "Algorithm name: Count Sort\n";
+    auto start = high_resolution_clock::now();
+    countSortFull(students, comp, filename);
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    outputFile << "Number of Comparisons equals: " << 0 << endl;
+    outputFile << "Time taken by algorithm: "
+               << duration.count() << " microseconds" << endl;
+    for (const auto &student : students)
+    {
+        outputFile << student.name << '\n'
+                   << student.id << '\n'
+                   << student.gpa << "\n\n";
+    }
+}
+
+template void insertionSort(vector<Student> &, CompareByGPA, const string &filename);
+template void insertionSort(vector<Student> &, CompareByName, const string &filename);
+
+template void selectionSort(vector<Student> &, CompareByGPA, const string &filename);
+template void selectionSort(vector<Student> &, CompareByName, const string &filename);
 
 template void bubbleSort(vector<Student> &, CompareByGPA, const string &filename);
 template void bubbleSort(vector<Student> &, CompareByName, const string &filename);
@@ -353,3 +467,6 @@ template void mergeSort(vector<Student> &, CompareByName, const string &filename
 
 template void shellSort(vector<Student> &, CompareByGPA, const string &filename);
 template void shellSort(vector<Student> &, CompareByName, const string &filename);
+
+template void countSort(vector<Student> &, CompareByGPA, const string &filename);
+template void countSort(vector<Student> &, CompareByName, const string &filename);
