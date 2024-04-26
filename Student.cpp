@@ -336,6 +336,54 @@ void shellSort(vector<Student> &students, Compare comp, const string &filename)
     }
 }
 
+void countSortFull(vector<int> &students, Compare comp, const string &filename){
+    int size = students.size();
+    int mxVal = students[0];
+    for (int i = 1; i < size; ++i)
+        if (students[i] > mxVal)
+            mxVal = students[i];
+
+    // Compute Frequency
+    vector<int> count(mxVal + 1);	// zeros
+    for (int i = 0; i < size; ++i)
+        count[students[i]] += 1;
+
+    // Accumulate the counting
+    for (int i = 1; i <= mxVal; ++i)
+        count[i] += count[i - 1];
+
+    // Find the index and put the number
+    vector<int> output(size);
+    for (int i = size - 1; i >= 0; --i) {
+        output[count[students[i]] - 1] = students[i];
+        count[students[i]] -= 1;
+    }
+}
+
+void CountSort(vector<Student> &students, Compare comp, const string &filename)
+{
+    ofstream outputFile(filename, ios::app);
+    if (!outputFile.is_open())
+    {
+        cerr << "Error: Unable to open file for writing: " << filename << endl;
+        return;
+    }
+    outputFile << "Algorithm name: Count Sort\n";
+    auto start = high_resolution_clock::now();
+    countSortFull(students, comp, 0, filename);
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    outputFile << "Number of Comparisons equals: " << 0 << endl;
+    outputFile << "Time taken by algorithm: "
+               << duration.count() << " microseconds" << endl;
+    for (const auto &student : students)
+    {
+        outputFile << student.name << '\n'
+                   << student.id << '\n'
+                   << student.gpa << "\n\n";
+    }
+}
+
 template void Insertion_sort(vector<Student> &, CompareByGPA);
 template void Insertion_sort(vector<Student> &, CompareByName);
 
