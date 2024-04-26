@@ -298,56 +298,36 @@ public:
     }
 
 };
-
-int main() {
-    CircularLinkedList<int> cll;
-    cll.insertAtTail(10);
-    cll.insertAtTail(20);
-    cll.insertAtTail(30);
-    cll.insertAtTail(40);
-    cll.insertAtTail(50);
-//    cll.removeAtHead();
-//    cll.removeAt(3);
-
-    cll.print();
-//    cll.swap(2,3);
-//    cll.print();
-
-//    if(cll.isItemAtEqual(1, 1))
-//        cout<<"yes"<<endl;
-//    else cout<<"No"<<endl;
-//    if(cll.isItemAtEqual(10, 1))
-//        cout<<"yes"<<endl;
-//    else cout<<"No"<<endl;
-//    cout<<cll.retrieveAt(3);
-//    cll.replaceAt(5, 1);
-//    if(cll.isExist(1)) cout<<"yup, the value 1 is exist."<<endl;
-//    else cout<<"value 1 not exist."<<endl;
-//
-//    if(cll.isExist(10)) cout<<"yup, the value 10 is exist."<<endl;
-//    else cout<<"value 10 not exist."<<endl;
-//    if(cll.isEmpty()) cout<<"is empty"<<endl;
-//    else cout<<"not empty"<<endl;
-//    cll.clear();
-//    cll.print();
-//    if(cll.isEmpty()) cout<<"is empty"<<endl;
-
+int main()
+{
+    CircularLinkedList<int> DLL;
+    DLL.insertAtTail(2);
+    DLL.insertAtTail(3);
+    DLL.insertAtTail(4);
+    DLL.insertAtTail(5);
+    DLL.print();
+    DLL.insertAtHead(1);
+    DLL.print();
+    cout << "Inserting element 6 at index 3 (1-based)\n";
+    DLL.insertAt(6, 3);
+    DLL.print();
+    DLL.removeAtTail();
+    DLL.removeAtHead();
+    DLL.print();
+    cout << "Removing element at index 2 (1-based)\n";
+    DLL.removeAt(2);
+    DLL.print();
+    cout << DLL.isEmpty() << " " << DLL.isExist(6) << " " << DLL.linkedListSize() << "\n";
+    cout << DLL.isItemAtEqual(4, 2) << "\n";
+    cout << "Element at index 1 (1-based) is: " << DLL.retrieveAt(1) << "\n";
+    cout << "Replacing element at index 1 (1-based) with 70:\n";
+    DLL.replaceAt(70, 1);
+    DLL.print();
+    DLL.swap(1, 2);
+    DLL.print();
+    DLL.clear();
+    DLL.print(); // List is empty, nothing is printed
+    // must see this line, otherwise we have RTE
+    cout << "\n\nNO RTE\n";
     return 0;
 }
-/**
- * insertAtHead:    done
- * insertAtTail:    done
- * insertAt:        done
- * removeAtHead:    done
- * removeAtTail:    done
- * removeAt:        done
- * retrieveAt:      done
- * replaceAt:       done
- * isExist:         done
- * isItemAtEqual:   done
- * swap:            done
- * isEmpty:         done
- * LinkedlistSize:  done
- * clear:           done
- * print:           done
-*/
