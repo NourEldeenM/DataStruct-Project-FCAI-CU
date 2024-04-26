@@ -2,30 +2,26 @@
 
 using namespace std;
 
-template <typename T>
-struct Node
-{
+template<typename T>
+struct Node {
     T data{};
     Node *next{};
     Node *prev{};
 
     Node(T data) : data(data) {}
 
-    void set(Node *next, Node *prev)
-    {
+    void set(Node *next, Node *prev) {
         this->next = next;
         this->prev = prev;
     }
 
-    ~Node()
-    {
+    ~Node() {
         cout << "Destroying value: " << data << " at address " << this << "\n";
     }
 };
 
-template <typename T>
-class LinkedList
-{
+template<typename T>
+class LinkedList {
 private:
     Node<T> *head{};
     Node<T> *tail{};
@@ -62,59 +58,50 @@ public:
     void print();
 
     // link 2 nodes in a DLL by making the second the next of the first and the first the previous of the second
-    void link(Node<T> *first, Node<T> *second)
-    {
+    void link(Node<T> *first, Node<T> *second) {
         if (first)
             first->next = second;
         if (second)
             second->prev = first;
     }
 
-    void delete_node(Node<T> *node)
-    {
+    void delete_node(Node<T> *node) {
         delete node;
         length--;
     }
 };
 
-template <typename T>
-void LinkedList<T>::insertAtHead(T element)
-{
+template<typename T>
+void LinkedList<T>::insertAtHead(T element) {
     Node<T> *newNode = new Node(element);
     if (!head)
         head = tail = newNode;
-    else
-    {
+    else {
         link(newNode, head);
         head = newNode;
     }
     length++;
 }
 
-template <typename T>
-void LinkedList<T>::insertAtTail(T element)
-{
+template<typename T>
+void LinkedList<T>::insertAtTail(T element) {
     Node<T> *newNode = new Node(element);
     if (!head)
         head = tail = newNode;
-    else
-    {
+    else {
         link(tail, newNode);
         tail = newNode;
     }
     length++;
 }
 
-template <typename T>
-void LinkedList<T>::insertAt(T element, int index)
-{
-    if (index == length + 1)
-    {
+template<typename T>
+void LinkedList<T>::insertAt(T element, int index) {
+    if (index == length + 1) {
         insertAtTail(element);
         return;
     }
-    if (index == 1)
-    {
+    if (index == 1) {
         insertAtHead(element);
         return;
     }
@@ -122,11 +109,9 @@ void LinkedList<T>::insertAt(T element, int index)
         return;
     Node<T> *newNode = new Node(element);
     int counter = 0;
-    for (Node<T> *curr = head, *pre = nullptr; curr; pre = curr, curr = curr->next)
-    {
+    for (Node<T> *curr = head, *pre = nullptr; curr; pre = curr, curr = curr->next) {
         counter++;
-        if (counter == index)
-        {
+        if (counter == index) {
             link(newNode, curr);
             link(pre, newNode);
             length++;
@@ -135,9 +120,8 @@ void LinkedList<T>::insertAt(T element, int index)
     }
 }
 
-template <typename T>
-void LinkedList<T>::removeAtHead()
-{
+template<typename T>
+void LinkedList<T>::removeAtHead() {
     if (!head)
         return;
     Node<T> *cur = head->next;
@@ -149,9 +133,8 @@ void LinkedList<T>::removeAtHead()
         tail = nullptr;
 }
 
-template <typename T>
-void LinkedList<T>::removeAtTail()
-{
+template<typename T>
+void LinkedList<T>::removeAtTail() {
     if (!head)
         return;
     Node<T> *cur = tail->prev;
@@ -163,31 +146,25 @@ void LinkedList<T>::removeAtTail()
         head = nullptr;
 }
 
-template <typename T>
-void LinkedList<T>::removeAt(int index)
-{
+template<typename T>
+void LinkedList<T>::removeAt(int index) {
     index--;
-    if (!head || index < 0 || index >= length)
-    {
+    if (!head || index < 0 || index >= length) {
         return;
     }
-    if (!index)
-    {
+    if (!index) {
         removeAtHead();
         return;
     }
     Node<T> *prevcur = nullptr, *cur = head;
-    for (int i = 0; i < index and cur != nullptr; i++)
-    { // Loop to find the node
+    for (int i = 0; i < index and cur != nullptr; i++) { // Loop to find the node
         prevcur = cur;
         cur = cur->next;
     }
-    if (!cur)
-    {
+    if (!cur) {
         return;
     }
-    if (cur->next == nullptr)
-    {
+    if (cur->next == nullptr) {
         removeAtTail();
         return;
     }
@@ -197,59 +174,49 @@ void LinkedList<T>::removeAt(int index)
     delete_node(cur);
 }
 
-template <typename T>
-T LinkedList<T>::retrieveAt(int index)
-{
+template<typename T>
+T LinkedList<T>::retrieveAt(int index) {
     index--;
     Node<T> *cur = head;
-    for (int i = 0; i < length and cur; ++i, cur = cur->next)
-    {
+    for (int i = 0; i < length and cur; ++i, cur = cur->next) {
         if (i == index)
             return cur->data;
     }
 }
 
-template <typename T>
-void LinkedList<T>::replaceAt(T newElement, int index)
-{
+template<typename T>
+void LinkedList<T>::replaceAt(T newElement, int index) {
     index--;
     Node<T> *cur = head;
-    for (int i = 0; i < length and cur; ++i, cur = cur->next)
-    {
-        if (i == index)
-        {
+    for (int i = 0; i < length and cur; ++i, cur = cur->next) {
+        if (i == index) {
             cur->data = newElement;
             return;
         }
     }
 }
 
-template <typename T>
-bool LinkedList<T>::isExist(T element)
-{
-    for (Node<T> *cur = head; cur; cur = cur->next)
-    {
+template<typename T>
+bool LinkedList<T>::isExist(T element) {
+    for (Node<T> *cur = head; cur; cur = cur->next) {
         if (element == cur->data)
             return true;
     }
     return false;
 }
 
-template <typename T>
-bool LinkedList<T>::isItemAtEqual(T element, int index)
-{
+template<typename T>
+bool LinkedList<T>::isItemAtEqual(T element, int index) {
     index--;
     Node<T> *cur = head;
-    for (int i = 0; i < length and cur; ++i, cur = cur->next)
-    {
+    for (int i = 0; i < length and cur; ++i, cur = cur->next) {
         if (i == index)
             return element == cur->data;
     }
 }
 
-template <typename T>
-void LinkedList<T>::swap(int firstItemIdx, int secondItemIdx)
-{
+template<typename T>
+void LinkedList<T>::swap(int firstItemIdx, int secondItemIdx) {
     if (head == nullptr || head->next == nullptr || firstItemIdx == secondItemIdx)
         return;
     int cnt = 0;
@@ -258,23 +225,18 @@ void LinkedList<T>::swap(int firstItemIdx, int secondItemIdx)
     Node<T> *cur = head;
     Node<T> *first = nullptr;
     Node<T> *second = nullptr;
-    while (cur)
-    {
+    while (cur) {
         if (cnt++ == firstItemIdx)
             first = cur;
         cur = cur->next;
     }
     cnt = 0;
     cur = head;
-    while (cur)
-    {
+    while (cur) {
         if (cnt++ == secondItemIdx)
             second = cur;
         cur = cur->next;
     }
-    cout << first << " " << second << "\n";
-    cout << first->data << " " << second->data << "\n";
-
     if (!first || !second)
         return;
     if (first == head)
@@ -300,27 +262,21 @@ void LinkedList<T>::swap(int firstItemIdx, int secondItemIdx)
         first->prev->next = first;
     if (second->prev)
         second->prev->next = second;
-    cout << first << " " << second << "\n";
-    cout << first->data << " " << second->data << "\n";
 }
 
-template <typename T>
-bool LinkedList<T>::isEmpty()
-{
+template<typename T>
+bool LinkedList<T>::isEmpty() {
     return !length || (head == nullptr and tail == nullptr);
 }
 
-template <typename T>
-int LinkedList<T>::linkedListSize()
-{
+template<typename T>
+int LinkedList<T>::linkedListSize() {
     return length;
 }
 
-template <typename T>
-void LinkedList<T>::clear()
-{
-    while (head)
-    {
+template<typename T>
+void LinkedList<T>::clear() {
+    while (head) {
         Node<T> *temp = head->next;
         delete_node(head);
         head = temp;
@@ -328,16 +284,14 @@ void LinkedList<T>::clear()
     head = tail = nullptr;
 }
 
-template <typename T>
-void LinkedList<T>::print()
-{
+template<typename T>
+void LinkedList<T>::print() {
     for (Node<T> *cur = head; cur; cur = cur->next)
         cout << cur->data << " ";
     cout << "\n";
 }
 
-int main()
-{
+int main() {
     LinkedList<int> DLL;
     DLL.insertAtTail(2);
     DLL.insertAtTail(3);
