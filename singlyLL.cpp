@@ -209,21 +209,19 @@ public:
             firstItemIdx > length || secondItemIdx > length || firstItemIdx < 0 || secondItemIdx < 0)
             return;
         int cnt = 0;
-        firstItemIdx--;
-        secondItemIdx--;
         Node<T> *cur = head;
         Node<T> *prevFirst = nullptr, *prevSecond = nullptr;
         Node<T> *first = nullptr;
         Node<T> *second = nullptr;
         while (cur) {
-            if (cnt++ == firstItemIdx)
+            if (++cnt == firstItemIdx)
                 first = cur;
             prevFirst = first, cur = cur->next;
         }
         cnt = 0;
         cur = head;
         while (cur) {
-            if (cnt++ == secondItemIdx)
+            if (++cnt == secondItemIdx)
                 second = cur;
             prevSecond = second, cur = cur->next;
         }
