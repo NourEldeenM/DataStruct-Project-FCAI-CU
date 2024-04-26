@@ -6,9 +6,6 @@ vector<Student> readInputFromFile();
 int main()
 {
     vector<Student> students = readInputFromFile();
-    for (int i = 0; i < students.size(); ++i)
-        cout << students[i].name << " " << students[i].id << " " << students[i].gpa << "\n";
-    cout << "\n";
 
     insertionSort(students, CompareByGPA(), "SortedByGPA.txt");
     insertionSort(students, CompareByName(), "SortedByName.txt");

@@ -1,6 +1,6 @@
 Algorithm name: Insertion Sort
 Number of Comparisons equals: 4
-Time taken by algorithm: 4 microseconds
+Time taken by algorithm: 1 microseconds
 Ali
 3541
 3.5
@@ -38,7 +38,7 @@ Sara Ahmed
 
 Algorithm name: Bubble Sort
 Number of Comparisons equals: 6
-Time taken by algorithm: 3 microseconds
+Time taken by algorithm: 1 microseconds
 Ali
 3541
 3.5
@@ -57,7 +57,7 @@ Sara Ahmed
 
 Algorithm name: Quick Sort
 Number of Comparisons equals: 2
-Time taken by algorithm: 117 microseconds
+Time taken by algorithm: 86 microseconds
 Ali
 3541
 3.5
@@ -76,7 +76,7 @@ Sara Ahmed
 
 Algorithm name: Merge Sort
 Number of Comparisons equals: 4
-Time taken by algorithm: 15 microseconds
+Time taken by algorithm: 8 microseconds
 Ali
 3541
 3.5
