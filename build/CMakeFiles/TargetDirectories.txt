@@ -1,6 +1,0 @@
-E:/Semester 4/Data Structures/Assignments/Assignment 1/Repo/DataStruct-Project-FCAI-CU/build/CMakeFiles/SortLibrary.dir
-E:/Semester 4/Data Structures/Assignments/Assignment 1/Repo/DataStruct-Project-FCAI-CU/build/CMakeFiles/DataStructureSortFunctions.dir
-E:/Semester 4/Data Structures/Assignments/Assignment 1/Repo/DataStruct-Project-FCAI-CU/build/CMakeFiles/package.dir
-E:/Semester 4/Data Structures/Assignments/Assignment 1/Repo/DataStruct-Project-FCAI-CU/build/CMakeFiles/package_source.dir
-E:/Semester 4/Data Structures/Assignments/Assignment 1/Repo/DataStruct-Project-FCAI-CU/build/CMakeFiles/edit_cache.dir
-E:/Semester 4/Data Structures/Assignments/Assignment 1/Repo/DataStruct-Project-FCAI-CU/build/CMakeFiles/rebuild_cache.dir
