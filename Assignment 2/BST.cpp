@@ -2,6 +2,7 @@
 
 using namespace std;
 
+// Define the Item class
 class Item {
 public:
     string itemName;
@@ -12,10 +13,12 @@ public:
 
     Item(string n, string c, int p) : itemName(n), category(c), price(p), left(nullptr), right(nullptr){}
 
+    // Overload the less than operator for comparison based on itemName
     bool operator<(const Item&other){
         return itemName < other.itemName;
     }
 
+    // Function to print the details of the item
     void print(){
         cout<<"Name: "<<itemName<<", Category: "<<category<<", Price: "<<price<<endl;
     }
@@ -25,14 +28,16 @@ public:
 
 class BinarySearchTree {
 private:
-    Item* root;
+    Item* root;  // Root of the binary search tree
 
+    // Function to find the node with the minimum value
     Item* min_node(Item* cur){
         while(cur && cur->left)
             cur = cur->left;
         return cur;
     }
 
+    // Function to delete a node and return a new node with the same data ( to avoid RTE )
     Item* special_delete(Item* child){
         Item* tmp = new Item(child->itemName, child->category, child->price);
         tmp->left = child->left;
@@ -41,6 +46,7 @@ private:
         return tmp;
     }
 
+    // Function to delete a node from the tree
     Item* delete_node(Item* node, const string& name){
         if(!node)
             return nullptr;
@@ -70,6 +76,7 @@ private:
         return node;
     }
 
+    // Function to insert a node into the tree
     void insert(Item* node, const string& name, const string& category, int price){
         if(name < node->itemName){
             if(!node->left)
@@ -86,6 +93,7 @@ private:
 //        else: already exits
     }
 
+    // Function to display the nodes of the tree in order
     void display(Item* node){
         if(node){
             display(node->left);
@@ -94,6 +102,7 @@ private:
         }
     }
 
+    // Function to store the nodes of the tree in a vector in order of itemName
     void displaySortByName(Item* node, vector<Item*> &items){
         if(node){
             if(node->left)
@@ -104,6 +113,7 @@ private:
         }
     }
 
+    // Function to store the nodes of the tree in a vector in order of price
     void displaySortByPrice(Item* node, vector<Item*> &items){
         if(node){
             if(node->left)
@@ -120,6 +130,7 @@ public:
             root(nullptr) {
     }
 
+    // Function to insert a node into the tree
     void insert(const string& name, const string& category, int price){
         if(!root)
             root = new Item(name, category, price);
@@ -127,16 +138,19 @@ public:
             insert(root, name, category, price);
     }
 
+    // Function to delete a node from the tree
     void delete_value(const string& name){
         if(name == root->itemName)
             return ; // can't remove root in this structure
         delete_node(root, name);
     }
 
+    // Function to display the nodes of the tree in order
     void display(){
         display(root);
     }
 
+    // Function to display the nodes of the tree sorted by itemName
     void displaySortByName(bool ascending){
         vector<Item*> items;
         displaySortByName(root, items);
@@ -146,6 +160,7 @@ public:
             item->print();
     }
 
+    // Function to display the nodes of the tree sorted by price
     void displaySortByPrice(bool ascending){
         vector<Item*> items;
         displaySortByPrice(root, items);
@@ -167,18 +182,18 @@ int main(){
     bst.insert("Carrot", "Vegetable", 4);
     bst.insert("Daikon", "Vegetable", 3);
     bst.insert("Eggplant", "Vegetable", 6);
-    bst.insert("Fig", "Fruit", 5);  // Added sixth node
+    bst.insert("Fig", "Fruit", 5);
 
     // Display the items
-    std::cout << "Items in the tree:\n";
+    cout << "Items in the tree:\n";
     bst.display();
 
     // Delete an item
-    std::cout << "\nDeleting 'Carrot'...\n";
+    cout << "\nDeleting 'Carrot'...\n";
     bst.delete_value("Carrot");
 
     // Display the items again
-    std::cout << "Items in the tree after deletion:\n";
+    cout << "Items in the tree after deletion:\n";
     bst.display();
 
     // Sort and display the items by name
