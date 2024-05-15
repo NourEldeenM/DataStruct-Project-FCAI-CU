@@ -54,7 +54,7 @@ private:
     }
 
     // Function to delete a node and return a new node with the same data ( to avoid RTE )
-    void *special_delete(BinarySearchTree *child) {
+    void special_delete(BinarySearchTree *child) {
         left = child->left;
         right = child->right;
         data = child->data;
