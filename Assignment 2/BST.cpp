@@ -8,19 +8,32 @@ public:
     string itemName;
     string category;
     int price;
-    Item* left;
-    Item* right;
 
-    Item(string n, string c, int p) : itemName(n), category(c), price(p), left(nullptr), right(nullptr){}
+    Item(string n, string c, int p) : itemName(n), category(c), price(p){}
 
     // Overload the less than operator for comparison based on itemName
-    bool operator<(const Item&other){
+    bool operator<(const Item &other) {
         return itemName < other.itemName;
     }
 
+    bool operator>(const Item &other) {
+        return itemName > other.itemName;
+    }
+
+    bool operator==(const Item &other) {
+        return itemName == other.itemName && category == other.category && price == other.price;
+    }
+
+    Item* operator=(const Item*other){
+        this->itemName = other->itemName;
+        this->category = other->category;
+        this->price = other->price;
+        return this;
+    }
+
     // Function to print the details of the item
-    void print(){
-        cout<<"Name: "<<itemName<<", Category: "<<category<<", Price: "<<price<<endl;
+    void print() {
+        cout << "Name: " << itemName << ", Category: " << category << ", Price: " << price << endl;
     }
 
 };
@@ -28,69 +41,56 @@ public:
 
 class BinarySearchTree {
 private:
-    Item* root;  // Root of the binary search tree
+    Item *data{};
+    BinarySearchTree *left{};
+    BinarySearchTree *right{};
 
     // Function to find the node with the minimum value
-    Item* min_node(Item* cur){
-        while(cur && cur->left)
+    BinarySearchTree *min_node() {
+        BinarySearchTree* cur = this;
+        while (cur && cur->left)
             cur = cur->left;
         return cur;
     }
 
     // Function to delete a node and return a new node with the same data ( to avoid RTE )
-    Item* special_delete(Item* child){
-        Item* tmp = new Item(child->itemName, child->category, child->price);
-        tmp->left = child->left;
-        tmp->right = child->right;
+    void *special_delete(BinarySearchTree *child) {
+        left = child->left;
+        right = child->right;
+        data = child->data;
         delete child;
-        return tmp;
     }
 
     // Function to delete a node from the tree
-    Item* delete_node(Item* node, const string& name){
-        if(!node)
+ BinarySearchTree *delete_node(BinarySearchTree *node, Item *item) {
+        if (!node)
             return nullptr;
 
-        if(name < node->itemName)
-            node->left = delete_node(node->left, name);
-        else if(name > node->itemName)
-            node->right = delete_node(node->right, name);
+        if (item < node->data)
+            node->left = delete_node(node->left, item);
+        else if (item > node->data)
+            node->right = delete_node(node->right, item);
         else {
-            if(!node->left && !node->right) {   // 0 children
+            // found the node: Handle deletion
+            BinarySearchTree* tmp = node;
+
+            if (!node->left && !node->right) {   // 0 children
                 delete node;
+//                return tmp;
                 return nullptr;
             }
-            // 1 child
-            else if(!node->left)    // one child on the right
-                node = special_delete(node->right);		// connect with child
-            else if(!node->right)
-                node = special_delete(node->left);		// connect with child
-            else{   // 2 children use successor
-                Item* mn = min_node(node->right);
-                node->itemName = mn->itemName;
-                node->category = mn->category;
-                node->price = mn->price;
-                node->right = delete_node(node->right, mn->itemName);
+           // 1 child
+            else if (!node->left)    // one child on the right
+                node->special_delete(node->right);        // connect with child
+            else if (!node->right)
+                node->special_delete(node->left);        // connect with child
+            else {   // 2 children use successor
+                BinarySearchTree *mn = node->right->min_node();
+                node->data = mn->data;
+                node->right = delete_node(node->right, mn->data);
             }
         }
         return node;
-    }
-
-    // Function to insert a node into the tree
-    void insert(Item* node, const string& name, const string& category, int price){
-        if(name < node->itemName){
-            if(!node->left)
-                node->left = new Item(name, category, price);
-            else
-                insert(node->left, name, category, price);
-        }
-        else if(name > node->itemName){
-            if(!node->right)
-                node->right = new Item(name, category, price);
-            else
-                insert(node->right, name, category, price);
-        }
-//        else: already exits
     }
 
     // Function to display the nodes of the tree in order
@@ -103,112 +103,131 @@ private:
     }
 
     // Function to store the nodes of the tree in a vector in order of itemName
-    void displaySortByName(Item* node, vector<Item*> &items){
-        if(node){
-            if(node->left)
+    void displaySortByName(BinarySearchTree *node, vector<Item *> &items) {
+        if (node) {
+            if (node->left)
                 displaySortByName(node->left, items);
-            items.push_back(node);
-            if(node->right)
+            items.push_back(node->data);
+            if (node->right)
                 displaySortByName(node->right, items);
         }
     }
 
     // Function to store the nodes of the tree in a vector in order of price
-    void displaySortByPrice(Item* node, vector<Item*> &items){
-        if(node){
-            if(node->left)
+    void displaySortByPrice(BinarySearchTree *node, vector<Item *> &items) {
+        if (node) {
+            if (node->left)
                 displaySortByPrice(node->left, items);
-            items.push_back(node);
-            if(node->right)
+            items.push_back(node->data);
+            if (node->right)
                 displaySortByPrice(node->right, items);
         }
     }
 
 public:
 
-    BinarySearchTree() :
-            root(nullptr) {
+    BinarySearchTree(Item* data) :
+            data(data) {
     }
 
     // Function to insert a node into the tree
-    void insert(const string& name, const string& category, int price){
-        if(!root)
-            root = new Item(name, category, price);
-        else
-            insert(root, name, category, price);
+    void insert(Item* item) {
+        if (item < data) {
+            if (!left) {
+                left = new BinarySearchTree(item);
+            }
+            else
+                left->insert(item);
+        } else if (item > data) {
+            if (!right)
+                right = new BinarySearchTree(item);
+            else
+                right->insert(item);
+        }
+//        else: already exits
     }
 
     // Function to delete a node from the tree
-    void delete_value(const string& name){
-        if(name == root->itemName)
-            return ; // can't remove root in this structure
-        delete_node(root, name);
+    void delete_item(Item* item) {
+        if (item == data && !left && !right)
+            return; // can't remove root in this structure
+        delete_node(this, item);
     }
 
     // Function to display the nodes of the tree in order
-    void display(){
-        display(root);
+    void display() {
+        display(this);
     }
 
     // Function to display the nodes of the tree sorted by itemName
-    void displaySortByName(bool ascending){
-        vector<Item*> items;
-        displaySortByName(root, items);
-        if(!ascending)
+    void displaySortByName(bool ascending) {
+        vector<Item *> items;
+        displaySortByName(this, items);
+        if (!ascending)
             reverse(items.begin(), items.end());
-        for(Item* item : items)
+        for (Item *item: items)
             item->print();
     }
 
     // Function to display the nodes of the tree sorted by price
-    void displaySortByPrice(bool ascending){
-        vector<Item*> items;
-        displaySortByPrice(root, items);
-        if(ascending)
-            sort(items.begin(), items.end(),[] (Item* first, Item* second) {return first->price < second->price;});
+    void displaySortByPrice(bool ascending) {
+        vector<Item *> items;
+        displaySortByPrice(this, items);
+        if (ascending)
+            sort(items.begin(), items.end(), [](Item *first, Item *second) { return first->price < second->price; });
         else
-            sort(items.begin(), items.end(), [] (Item* first, Item* second) {return first->price > second->price;});
-        for(Item* item: items)
+            sort(items.begin(), items.end(), [](Item *first, Item *second) { return first->price > second->price; });
+        for (Item *item: items)
             item->print();
     }
 };
 
-int main(){
-    BinarySearchTree bst;
+int main() {
+
+    Item* item1 = new Item("Apple", "Fruit", 2);
+    Item* item2 = new Item("Banana", "Fruit", 1);
+    Item* item3 = new Item("Carrot", "Vegetable", 4);
+    Item* item4 = new Item("Daikon", "Vegetable", 3);
+    Item* item5 = new Item("Eggplant", "Vegetable", 6);
+    Item* item6 = new Item("Fig", "Fruit", 5);
+
+    BinarySearchTree* bst = new BinarySearchTree(item1);
 
     // Add some items to the tree
-    bst.insert("Apple", "Fruit", 2);
-    bst.insert("Banana", "Fruit", 1);
-    bst.insert("Carrot", "Vegetable", 4);
-    bst.insert("Daikon", "Vegetable", 3);
-    bst.insert("Eggplant", "Vegetable", 6);
-    bst.insert("Fig", "Fruit", 5);
+    bst->insert(item2);
+    bst->insert(item3);
+    bst->insert(item4);
+    bst->insert(item5);
+    bst->insert(item6);
 
     // Display the items
     cout << "Items in the tree:\n";
-    bst.display();
+    bst->display();
 
     // Delete an item
     cout << "\nDeleting 'Carrot'...\n";
-    bst.delete_value("Carrot");
+    bst->delete_item(item3);
 
     // Display the items again
     cout << "Items in the tree after deletion:\n";
-    bst.display();
+    bst->display();
+    // Display the items
+    cout << "Items in the tree:\n";
+    bst->display();
 
     // Sort and display the items by name
     cout << "\nItems sorted by name (ascending):\n";
-    bst.displaySortByName(true);
+    bst->displaySortByName(true);
 
     cout << "\nItems sorted by name (descending):\n";
-    bst.displaySortByName(false);
+    bst->displaySortByName(false);
 
     // Sort and display the items by price
     cout << "\nItems sorted by price (ascending):\n";
-    bst.displaySortByPrice(true);
+    bst->displaySortByPrice(true);
 
     cout << "\nItems sorted by price (descending):\n";
-    bst.displaySortByPrice(false);
+    bst->displaySortByPrice(false);
 
     return 0;
 }
