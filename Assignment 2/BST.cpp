@@ -61,8 +61,10 @@ private:
         delete child;
     }
 
+    // Delete the target node in the tree and return updated tree
+    // Caller use updated tree to re-link with children!
     // Function to delete a node from the tree
- BinarySearchTree *delete_node(BinarySearchTree *node, Item *item) {
+    BinarySearchTree *delete_node(BinarySearchTree *node, Item *item) {
         if (!node)
             return nullptr;
 
@@ -79,7 +81,7 @@ private:
 //                return tmp;
                 return nullptr;
             }
-           // 1 child
+                // 1 child
             else if (!node->left)    // one child on the right
                 node->special_delete(node->right);        // connect with child
             else if (!node->right)
@@ -88,16 +90,19 @@ private:
                 BinarySearchTree *mn = node->right->min_node();
                 node->data = mn->data;
                 node->right = delete_node(node->right, mn->data);
+//                tmp = nullptr;
             }
+//            if(tmp)
+//                delete tmp;
         }
         return node;
     }
 
     // Function to display the nodes of the tree in order
-    void display(Item* node){
-        if(node){
+    void display(BinarySearchTree *node) {
+        if (node) {
             display(node->left);
-            node->print();
+            node->data->print();
             display(node->right);
         }
     }
