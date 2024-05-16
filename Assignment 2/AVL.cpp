@@ -1,4 +1,7 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
 // Define the Item class
@@ -12,31 +15,13 @@ public:
     Item(string n, string c, int p) : itemName(n), category(c), price(p) {}
 
     // Overload the less than operator for comparison based on itemName
-    bool operator<(const Item &other)
+    bool operator<(const Item &other) const
     {
         return itemName < other.itemName;
     }
 
-    bool operator>(const Item &other)
-    {
-        return itemName > other.itemName;
-    }
-
-    bool operator==(const Item &other)
-    {
-        return itemName == other.itemName && category == other.category && price == other.price;
-    }
-
-    Item *operator=(const Item *other)
-    {
-        this->itemName = other->itemName;
-        this->category = other->category;
-        this->price = other->price;
-        return this;
-    }
-
     // Function to print the details of the item
-    void print()
+    void print() const
     {
         cout << "Name: " << itemName << ", Category: " << category << ", Price: " << price << endl;
     }
@@ -49,36 +34,40 @@ public:
     AvlNode *left;
     AvlNode *right;
     int height;
-    AvlNode(const Item &item) : item(item), left(nullptr), right(nullptr), height(0) {}
+    AvlNode *root; // Add root member variable
 
-    void addItem(const Item &item) ;
-    void removeItem(const string &itemName) ;
-    void inorderTraversal(AvlNode *root) ;
-    void display() ;
-    void displayAscendingByName() ;
-    void displayDescendingByName() ;
-    void displayDescendingByNameHelper(AvlNode *node) ;
-    void collectItems(AvlNode *node, vector<Item> &items) ;
-    void displayAscendingByPrice() ;
-    void displayDescendingByPrice() ;
+    AvlNode(const Item &item) : item(item), left(nullptr), right(nullptr), height(0), root(nullptr) {} // Initialize root to nullptr in the constructor
 
-   
+    // Function declarations...
+
+    void addItem(const Item &item);
+    void removeItem(const string &itemName);
+    void inorderTraversal(AvlNode *root) const;
+    void display() const;
+    void displayAscendingByName() const;
+    void displayDescendingByName() const;
+    void displayDescendingByNameHelper(AvlNode *node) const;
+    void collectItems(AvlNode *node, std::vector<Item> &items) const;
+    void displayAscendingByPrice() const;
+    void displayDescendingByPrice() const;
 };
+
 // return the height for the node
 int getHeight(AvlNode *N)
 {
-    if (N == NULL)
+    if (N == nullptr)
         return -1;
 
     int leftHeight = getHeight(N->left);
     int rightHeight = getHeight(N->right);
 
-    return (leftHeight > rightHeight) ? leftHeight + 1 : rightHeight + 1;
+    return max(leftHeight, rightHeight) + 1;
 }
+
 // Get the balance factor of each node
 int getBalanceFactor(AvlNode *N)
 {
-    if (N == NULL)
+    if (N == nullptr)
         return 0;
     return getHeight(N->left) - getHeight(N->right);
 }
@@ -95,6 +84,7 @@ AvlNode *LL_Rotate(AvlNode *root)
     LCh->height = getHeight(LCh);
     return LCh;
 }
+
 AvlNode *RR_Rotate(AvlNode *root)
 {
     AvlNode *rightCh = root->right;   // rightCh  : right child
@@ -107,6 +97,7 @@ AvlNode *RR_Rotate(AvlNode *root)
     rightCh->height = getHeight(rightCh);
     return rightCh;
 }
+
 AvlNode *insert(AvlNode *node, const Item &item)
 {
     if (node == nullptr)
@@ -240,7 +231,8 @@ AvlNode *deleteNode(AvlNode *root, const string &key)
 
     return root;
 }
-void AvlNode::inorderTraversal(AvlNode *root)
+
+void AvlNode::inorderTraversal(AvlNode *root) const
 {
     if (root != nullptr)
     {
@@ -252,33 +244,26 @@ void AvlNode::inorderTraversal(AvlNode *root)
 
 void AvlNode::addItem(const Item &item)
 {
-    AvlNode *root = insert(root, item);
+    root = insert(root, item);
 }
 
 void AvlNode::removeItem(const string &itemName)
 {
-    AvlNode *root = deleteNode(root, itemName);
+    root = deleteNode(root, itemName);
 }
 
-void AvlNode::display()
+void AvlNode::display() const
 {
-    AvlNode *root;
     cout << "Items in the AVL tree:" << endl;
     inorderTraversal(root);
 }
-void AvlNode::displayAscendingByName()
+
+void AvlNode::displayAscendingByName() const
 {
-    AvlNode *root;
     inorderTraversal(root);
 }
 
-void AvlNode::displayDescendingByName()
-{
-    AvlNode *root;
-    displayDescendingByNameHelper(root);
-}
-
-void AvlNode::displayDescendingByNameHelper(AvlNode *node)
+void AvlNode::displayDescendingByNameHelper(AvlNode *node) const
 {
     if (node != nullptr)
     {
@@ -288,7 +273,7 @@ void AvlNode::displayDescendingByNameHelper(AvlNode *node)
     }
 }
 
-void AvlNode::collectItems(AvlNode *node, vector<Item> &items)
+void AvlNode::collectItems(AvlNode *node, std::vector<Item> &items) const
 {
     if (node != nullptr)
     {
@@ -303,10 +288,9 @@ bool priceAscendingComparator(const Item &a, const Item &b)
     return a.price < b.price;
 }
 
-void AvlNode::displayAscendingByPrice()
+void AvlNode::displayAscendingByPrice() const
 {
     vector<Item> items;
-    AvlNode *root;
     collectItems(root, items);
 
     sort(items.begin(), items.end(), priceAscendingComparator);
@@ -321,10 +305,10 @@ bool priceDescendingComparator(const Item &a, const Item &b)
 {
     return a.price > b.price;
 }
-void AvlNode::displayDescendingByPrice()
+
+void AvlNode::displayDescendingByPrice() const
 {
     vector<Item> items;
-    AvlNode *root;
     collectItems(root, items);
 
     sort(items.begin(), items.end(), priceDescendingComparator);
@@ -335,19 +319,20 @@ void AvlNode::displayDescendingByPrice()
     }
 }
 
-int main() {
+int main()
+{
 
-    Item item1 ("Apple", "Fruit", 2);
-    Item item2 ("Banana", "Fruit", 1);
-    Item item3 ("Carrot", "Vegetable", 4);
-    Item item4 ("Daikon", "Vegetable", 3);
-    Item item5 ("Eggplant", "Vegetable", 6);
-    Item item6 ("Fig", "Fruit", 5);
+    Item item1("Apple", "Fruit", 2);
+    Item item2("Banana", "Fruit", 1);
+    Item item3("Carrot", "Vegetable", 4);
+    Item item4("Daikon", "Vegetable", 3);
+    Item item5("Eggplant", "Vegetable", 6);
+    Item item6("Fig", "Fruit", 5);
 
     AvlNode avl(item1);
-    
 
     // Add some items to the tree
+    avl.addItem(item1);
     avl.addItem(item2);
     avl.addItem(item3);
     avl.addItem(item4);
@@ -365,12 +350,18 @@ int main() {
     // Display the items again
     cout << "Items in the tree after deletion:\n";
     avl.display();
-    //Display the items
-    cout << "Items in the tree:\n";
-    avl.display();
 
-    // Sort an.display the items by name
+    // Sort and display the items by name
     cout << "\nItems sorted by name (ascending):\n";
+    avl.displayAscendingByName();
+
+    // Sort and display the items by price
+    cout << "\nItems sorted by price (ascending):\n";
+    avl.displayAscendingByPrice();
+
+    // Sort and display the items by price in descending order
+    cout << "\nItems sorted by price (descending):\n";
+    avl.displayDescendingByPrice();
 
     return 0;
 }
