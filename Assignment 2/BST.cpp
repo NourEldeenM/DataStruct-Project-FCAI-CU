@@ -176,10 +176,11 @@ public:
     }
 
     // Function to delete a node from the tree
-    void delete_item(Item* item) {
+    bool delete_item(Item* item) {
         if (item->getName() == data->getName() && !left && !right)
-            return; // can't remove root in this structure
+            return false; // can't remove root in this structure
         delete_node(this, item);
+        return true;
     }
 
     // Function to display the nodes of the tree in order
@@ -268,8 +269,10 @@ int main() {
 //                cin >> price;
                 Item *toDelete = itemBSTByPrice.search(new Item(name, "", 0));
                 if (toDelete) {
-                    itemBSTByPrice.delete_item(new Item(name, category, price));
-                    cout << "Item " << name << " deleted successfully.\n";
+                    if(itemBSTByPrice.delete_item(toDelete))
+                        cout << "Item " << name << " deleted successfully.\n";
+                    else
+                        cout << "can't remove the root. \n";
                 } else
                     cout << "Item not found\n";
                 break;
