@@ -4,28 +4,31 @@ using namespace std;
 
 // Define the Item class
 class Item {
-public:
-    string itemName;
+    string name;
     string category;
     int price;
 
-    Item(string n, string c, int p) : itemName(n), category(c), price(p){}
+public:
+    Item(string n, string c, int p) : name(n), category(c), price(p){}
 
-    // Overload the less than operator for comparison based on itemName
-    bool operator<(const Item &other) {
-        return itemName < other.itemName;
+    string getName() const {
+        return name;
     }
 
-    bool operator>(const Item &other) {
-        return itemName > other.itemName;
+    int getPrice() const {
+        return price;
+    }
+
+    string getCategory() const {
+        return category;
     }
 
     bool operator==(const Item &other) {
-        return itemName == other.itemName && category == other.category && price == other.price;
+        return name == other.name && category == other.category && price == other.price;
     }
 
     Item* operator=(const Item*other){
-        this->itemName = other->itemName;
+        this->name = other->name;
         this->category = other->category;
         this->price = other->price;
         return this;
@@ -33,15 +36,34 @@ public:
 
     // Function to print the details of the item
     void print() {
-        cout << "Name: " << itemName << ", Category: " << category << ", Price: " << price << endl;
+        cout << "Name: " << name << ", Category: " << category << ", Price: " << price << endl;
     }
+};
 
+struct CompareByName {
+    bool operator()(Item *a, Item *b) const {
+        return a->getName() < b->getName();
+    }
+};
+
+struct CompareByCategory {
+    bool operator()(Item *a, Item *b) const {
+        return a->getCategory() < b->getCategory();
+    }
+};
+
+struct CompareByPrice {
+    bool operator()(Item *a, Item *b) const {
+        return a->getPrice() < b->getPrice();
+    }
 };
 
 
+template<typename Comparator>
 class BinarySearchTree {
 private:
     Item *data{};
+    Comparator compare;
     BinarySearchTree *left{};
     BinarySearchTree *right{};
 
@@ -68,9 +90,10 @@ private:
         if (!node)
             return nullptr;
 
-        if (item < node->data)
+
+        if (compare(item, node->data))
             node->left = delete_node(node->left, item);
-        else if (item > node->data)
+        else if (compare(node->data, item))
             node->right = delete_node(node->right, item);
         else {
             // found the node: Handle deletion
@@ -131,21 +154,21 @@ private:
 
 public:
 
-    BinarySearchTree(Item* data) :
-            data(data) {
+    BinarySearchTree(Item *data, Comparator comp) :
+            data(data), compare(comp) {
     }
 
     // Function to insert a node into the tree
-    void insert(Item* item) {
-        if (item < data) {
+    void insert(Item *item) {
+        if (compare(item, data)) {
             if (!left) {
-                left = new BinarySearchTree(item);
+                left = new BinarySearchTree(item, compare);
             }
             else
                 left->insert(item);
-        } else if (item > data) {
+        } else if (compare(data, item)) {
             if (!right)
-                right = new BinarySearchTree(item);
+                right = new BinarySearchTree(item, compare);
             else
                 right->insert(item);
         }
@@ -154,7 +177,7 @@ public:
 
     // Function to delete a node from the tree
     void delete_item(Item* item) {
-        if (item == data && !left && !right)
+        if (item->getName() == data->getName() && !left && !right)
             return; // can't remove root in this structure
         delete_node(this, item);
     }
@@ -168,8 +191,7 @@ public:
     void displaySortByName(bool ascending) {
         vector<Item *> items;
         displaySortByName(this, items);
-        if (!ascending)
-            reverse(items.begin(), items.end());
+        sort(items.begin(), items.end(), [ascending](Item *first, Item *second) { return ascending ? first->getName() < second->getName() : first->getName() > second->getName(); });
         for (Item *item: items)
             item->print();
     }
@@ -178,61 +200,115 @@ public:
     void displaySortByPrice(bool ascending) {
         vector<Item *> items;
         displaySortByPrice(this, items);
-        if (ascending)
-            sort(items.begin(), items.end(), [](Item *first, Item *second) { return first->price < second->price; });
-        else
-            sort(items.begin(), items.end(), [](Item *first, Item *second) { return first->price > second->price; });
+        sort(items.begin(), items.end(), [ascending](Item *first, Item *second) { return ascending ? first->getPrice() < second->getPrice() : first->getPrice() > second->getPrice(); });
         for (Item *item: items)
             item->print();
+    }
+
+    Item* search(Item *item) {
+        BinarySearchTree *current = this;
+        while (current) {
+            if (item->getName() < current->data->getName())
+                current = current->left;
+            else if (current->data->getName() < item->getName())
+                current = current->right;
+            else
+                return current->data;  // Found the item
+        }
+        return nullptr;  // Item not found
     }
 };
 
 int main() {
 
     Item* item1 = new Item("Apple", "Fruit", 2);
-    Item* item2 = new Item("Banana", "Fruit", 1);
-    Item* item3 = new Item("Carrot", "Vegetable", 4);
-    Item* item4 = new Item("Daikon", "Vegetable", 3);
-    Item* item5 = new Item("Eggplant", "Vegetable", 6);
-    Item* item6 = new Item("Fig", "Fruit", 5);
+    BinarySearchTree<CompareByPrice> itemBSTByPrice(item1, CompareByPrice());
+    int choice;
+    string name, category;
+    int price;
 
-    BinarySearchTree* bst = new BinarySearchTree(item1);
+    while (true) {
+        cout << "\nMenu:\n";
+        cout << "1. Add item\n";
+        cout << "2. Remove item\n";
+        cout << "3. Display items normally\n";
+        cout << "4. Display items sorted by name ascending\n";
+        cout << "5. Display items sorted by name descending\n";
+        cout << "6. Display items sorted by price ascending\n";
+        cout << "7. Display items sorted by price descending\n";
+        cout << "8. Exit\n";
+        cout << "Enter your choice: ";
+        while (!(cin >> choice) || choice < 1 || choice > 8) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid choice. Please enter a number between 1 and 8: ";
+        }
 
-    // Add some items to the tree
-    bst->insert(item2);
-    bst->insert(item3);
-    bst->insert(item4);
-    bst->insert(item5);
-    bst->insert(item6);
-
-    // Display the items
-    cout << "Items in the tree:\n";
-    bst->display();
-
-    // Delete an item
-    cout << "\nDeleting 'Carrot'...\n";
-    bst->delete_item(item3);
-
-    // Display the items again
-    cout << "Items in the tree after deletion:\n";
-    bst->display();
-    // Display the items
-    cout << "Items in the tree:\n";
-    bst->display();
-
-    // Sort and display the items by name
-    cout << "\nItems sorted by name (ascending):\n";
-    bst->displaySortByName(true);
-
-    cout << "\nItems sorted by name (descending):\n";
-    bst->displaySortByName(false);
-
-    // Sort and display the items by price
-    cout << "\nItems sorted by price (ascending):\n";
-    bst->displaySortByPrice(true);
-
-    cout << "\nItems sorted by price (descending):\n";
-    bst->displaySortByPrice(false);
-
-    return 0;
+        switch (choice) {
+            case 1: {
+                cout << "Enter item name:  ";
+                cin >> name;
+                cout << "Enter item category:  ";
+                cin >> category;
+                cout << "Enter item price:  ";
+                while (!(cin >> price)) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Invalid price. Please enter a number: ";
+                }
+                itemBSTByPrice.insert(new Item(name, category, price));
+                break;
+            }
+            case 2: {
+                cout << "Enter the name of item you want to delete:  ";
+                cin >> name;
+//                cout << "Enter item category:  ";
+//                cin >> category;
+//                cout << "Enter item price:  ";
+//                cin >> price;
+                Item *toDelete = itemBSTByPrice.search(new Item(name, "", 0));
+                if (toDelete) {
+                    itemBSTByPrice.delete_item(new Item(name, category, price));
+                    cout << "Item " << name << " deleted successfully.\n";
+                } else
+                    cout << "Item not found\n";
+                break;
+            }
+            case 3: {
+                itemBSTByPrice.display();
+                break;
+            }
+            case 4: {
+                itemBSTByPrice.displaySortByName(true);
+                break;
+            }
+            case 5: {
+                itemBSTByPrice.displaySortByName(false);
+                break;
+            }
+            case 6: {
+                itemBSTByPrice.displaySortByPrice(true);
+                break;
+            }
+            case 7: {
+                itemBSTByPrice.displaySortByPrice(false);
+                break;
+            }
+            case 8: {
+                return 0;
+            }
+            default: {
+                cout << "Invalid choice. Please try again.\n";
+                break;
+            }
+        }
+    }
 }
+/*
+        Item* item1 = new Item("Apple", "Fruit", 2);
+        Item* item2 = new Item("Banana", "Fruit", 1);
+        Item* item3 = new Item("Carrot", "Vegetable", 4);
+        Item* item4 = new Item("Daikon", "Vegetable", 3);
+        Item* item5 = new Item("Eggplant", "Vegetable", 6);
+        Item* item6 = new Item("Fig", "Fruit", 5);
+*/
