@@ -23,11 +23,11 @@ public:
         return category;
     }
 
-    bool operator==(const Item &other) {
-        return name == other.name && category == other.category && price == other.price;
+    bool operator==(Item *other) {
+        return name == other->name && category == other->category && price == other->price;
     }
 
-    Item* operator=(const Item*other){
+    Item* operator=(Item *other){
         this->name = other->name;
         this->category = other->category;
         this->price = other->price;
