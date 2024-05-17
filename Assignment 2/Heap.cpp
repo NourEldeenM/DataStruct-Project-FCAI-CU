@@ -135,3 +135,73 @@ template<typename Comparator>
 int Heap<Comparator>::parent(int index) const {
     return (index - 1) / 2;
 }
+
+int main() {
+    Heap<CompareByPrice> itemHeapByPrice(CompareByPrice(), false);
+    int choice;
+    string name, category;
+    int price;
+    itemHeapByPrice.addItem(Item("a", "1", 10));
+    itemHeapByPrice.addItem(Item("b", "2", 100));
+    itemHeapByPrice.addItem(Item("c", "3", 1000));
+    itemHeapByPrice.addItem(Item("d", "4", 1000005));
+
+    while (true) {
+        cout << "\nMenu:\n";
+        cout << "1. Add item\n";
+        cout << "2. Remove item\n";
+        cout << "3. Display items normally\n";
+        cout << "4. Display items sorted by name ascending\n";
+        cout << "5. Display items sorted by name descending\n";
+        cout << "6. Display items sorted by price ascending\n";
+        cout << "7. Display items sorted by price descending\n";
+        cout << "8. Perform heap sort\n";
+        cout << "9. Toggle heap type (min-heap/max-heap)\n";
+        cout << "10. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                cout << "Enter item name:  ";
+                cin >> name;
+                cout << "Enter item category:  ";
+                cin >> category;
+                cout << "Enter item price:  ";
+                cin >> price;
+                itemHeapByPrice.addItem(Item(name, category, price));
+                break;
+            case 2:
+                itemHeapByPrice.removeItem();
+                break;
+            case 3:
+                itemHeapByPrice.displayItems();
+                break;
+            case 4:
+                itemHeapByPrice.displaySortedByName(true);
+                break;
+            case 5:
+                itemHeapByPrice.displaySortedByName(false);
+                break;
+            case 6:
+                itemHeapByPrice.displaySortedByPrice(true);
+                break;
+            case 7:
+                itemHeapByPrice.displaySortedByPrice(false);
+                break;
+            case 8:
+                itemHeapByPrice.heapSort();
+                break;
+            case 9:
+                itemHeapByPrice.changeHeapType();
+                cout << "Heap type toggled." << "\n";
+                break;
+            case 10:
+                return 0;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    }
+    return 0;
+}
+
+
