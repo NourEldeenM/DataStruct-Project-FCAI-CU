@@ -5,181 +5,132 @@
 
 using namespace std;
 
-class Item {
-public:
+struct Item {
     string itemName;
     string category;
-    int price;
+    double price;
 
-    Item(string n, string c, int p) : itemName(n), category(c), price(p) {}
-
-    string getName() const {
-        return itemName;
-    }
-
-    int getPrice() const {
-        return price;
-    }
-
-    string getCategory() const {
-        return category;
-    }
-
-    void print() const {
-        cout << "Name: " << itemName << ", Category: " << category << ", Price: " << price << endl;
-    }
+    Item(string name, string cat, double pr) : itemName(name), category(cat), price(pr) {}
 };
 
-
-
-
-
-
-
 struct CompareByName {
-    bool operator()(const Item &a, const Item &b) const {
-        return a.getName() < b.getName();
+    bool operator()(const Item& a, const Item& b) const {
+        return a.itemName < b.itemName;
     }
 };
 
 struct CompareByCategory {
-    bool operator()(const Item &a, const Item &b) const {
-        return a.getCategory() < b.getCategory();
+    bool operator()(const Item& a, const Item& b) const {
+        return a.category < b.category;
     }
 };
 
 struct CompareByPrice {
-    bool operator()(const Item &a, const Item &b) const {
-        return a.getPrice() < b.getPrice();
+    bool operator()(const Item& a, const Item& b) const {
+        return a.price < b.price;
     }
 };
 
-
-
-
-
-
-
-template<typename Comparator>
-class AvlNode {
-public:
-    Item item;
-    AvlNode *left;
-    AvlNode *right;
-    int height;
-    Comparator comp;
-
-    AvlNode(const Item &item, Comparator comp)
-            : item(item), left(nullptr), right(nullptr), height(0), comp(comp) {}
-};
-
-template<typename Comparator>
+template<typename Item, typename Comparator>
 class AvlTree {
 private:
-    AvlNode<Comparator> *root;
+    struct AvlNode {
+        Item item;
+        AvlNode* left;
+        AvlNode* right;
+        int height;
+        AvlNode(const Item& i) : item(i), left(nullptr), right(nullptr), height(1) {}
+    };
+
+    AvlNode* root;
     Comparator comp;
 
-    // Return the height for the node
-    int getHeight(AvlNode<Comparator> *N) {
-        if (N == nullptr)
-            return -1;
-
-        int leftHeight = getHeight(N->left);
-        int rightHeight = getHeight(N->right);
-
-        return max(leftHeight, rightHeight) + 1;
+    int getHeight(AvlNode* node) const {
+        return node ? node->height : 0;
     }
 
-    // Get the balance factor of each node
-    int getBalanceFactor(AvlNode<Comparator> *N) {
-        if (N == nullptr)
-            return 0;
-        return getHeight(N->left) - getHeight(N->right);
+    int getBalanceFactor(AvlNode* node) const {
+        return node ? getHeight(node->left) - getHeight(node->right) : 0;
     }
 
-    AvlNode<Comparator> *LL_Rotate(AvlNode<Comparator> *root) {
-        AvlNode<Comparator> *LCh = root->left;  // LCh  : left child
-        AvlNode<Comparator> *LRCh = LCh->right; // LRCh   : left right child
-
-        LCh->right = root;
-        root->left = LRCh;
-
-        root->height = getHeight(root);
-        LCh->height = getHeight(LCh);
-        return LCh;
-    }
-
-    AvlNode<Comparator> *RR_Rotate(AvlNode<Comparator> *root) {
-        AvlNode<Comparator> *rightCh = root->right;   // rightCh  : right child
-        AvlNode<Comparator> *leftRCh = rightCh->left; // leftRCh : right child then right
-
-        rightCh->left = root;
-        root->right = leftRCh;
-
-        root->height = getHeight(root);
-        rightCh->height = getHeight(rightCh);
-        return rightCh;
-    }
-
-    AvlNode<Comparator> *insert(AvlNode<Comparator> *node, const Item &item) {
-        if (node == nullptr) {
-            return new AvlNode<Comparator>(item, comp);
+    void updateHeight(AvlNode* node) {
+        if (node) {
+            node->height = 1 + max(getHeight(node->left), getHeight(node->right));
         }
+    }
+
+    AvlNode* LL_Rotate(AvlNode* node) {
+        AvlNode* newRoot = node->left;
+        node->left = newRoot->right;
+        newRoot->right = node;
+        updateHeight(node);
+        updateHeight(newRoot);
+        return newRoot;
+    }
+
+    AvlNode* RR_Rotate(AvlNode* node) {
+        AvlNode* newRoot = node->right;
+        node->right = newRoot->left;
+        newRoot->left = node;
+        updateHeight(node);
+        updateHeight(newRoot);
+        return newRoot;
+    }
+
+    AvlNode* insert(AvlNode* node, const Item& item) {
+        if (!node) return new AvlNode(item);
 
         if (comp(item, node->item)) {
             node->left = insert(node->left, item);
         } else if (comp(node->item, item)) {
             node->right = insert(node->right, item);
         } else {
-            return node;
+            return node; // Duplicate items are not allowed
         }
 
-        node->height = 1 + max(getHeight(node->left), getHeight(node->right));
-
+        updateHeight(node);
         int balance = getBalanceFactor(node);
 
-        if (balance > 1 && comp(item, node->left->item)) {
-            return LL_Rotate(node);
+        if (balance > 1) {
+            if (comp(item, node->left->item)) {
+                return LL_Rotate(node);
+            } else {
+                node->left = RR_Rotate(node->left);
+                return LL_Rotate(node);
+            }
         }
 
-        if (balance < -1 && comp(node->right->item, item)) {
-            return RR_Rotate(node);
-        }
-
-        if (balance > 1 && comp(node->left->item, item)) {
-            node->left = RR_Rotate(node->left);
-            return LL_Rotate(node);
-        }
-
-        if (balance < -1 && comp(item, node->right->item)) {
-            node->right = LL_Rotate(node->right);
-            return RR_Rotate(node);
+        if (balance < -1) {
+            if (comp(node->right->item, item)) {
+                return RR_Rotate(node);
+            } else {
+                node->right = LL_Rotate(node->right);
+                return RR_Rotate(node);
+            }
         }
 
         return node;
     }
 
-    AvlNode<Comparator> *minValueNode(AvlNode<Comparator> *node) {
-        AvlNode<Comparator> *current = node;
-        while (current->left != nullptr) {
+    AvlNode* minValueNode(AvlNode* node) const {
+        AvlNode* current = node;
+        while (current && current->left) {
             current = current->left;
         }
         return current;
     }
 
-    AvlNode<Comparator> *deleteNode(AvlNode<Comparator> *root, const Item &item) {
-        if (root == nullptr) {
-            return root;
-        }
+    AvlNode* deleteNode(AvlNode* root, const Item& item) {
+        if (!root) return root;
+
         if (comp(item, root->item)) {
             root->left = deleteNode(root->left, item);
         } else if (comp(root->item, item)) {
             root->right = deleteNode(root->right, item);
         } else {
-            if ((root->left == nullptr) || (root->right == nullptr)) {
-                AvlNode<Comparator> *temp = root->left ? root->left : root->right;
-
-                if (temp == nullptr) {
+            if (!root->left || !root->right) {
+                AvlNode* temp = root->left ? root->left : root->right;
+                if (!temp) {
                     temp = root;
                     root = nullptr;
                 } else {
@@ -187,53 +138,48 @@ private:
                 }
                 delete temp;
             } else {
-                AvlNode<Comparator> *temp = minValueNode(root->right);
-
+                AvlNode* temp = minValueNode(root->right);
                 root->item = temp->item;
-
                 root->right = deleteNode(root->right, temp->item);
             }
         }
 
-        if (root == nullptr) {
-            return root;
-        }
+        if (!root) return root;
 
-        root->height = getHeight(root);
-
+        updateHeight(root);
         int balance = getBalanceFactor(root);
 
-        if (balance > 1 && getBalanceFactor(root->left) >= 0) {
-            return LL_Rotate(root);
+        if (balance > 1) {
+            if (getBalanceFactor(root->left) >= 0) {
+                return LL_Rotate(root);
+            } else {
+                root->left = RR_Rotate(root->left);
+                return LL_Rotate(root);
+            }
         }
 
-        if (balance > 1 && getBalanceFactor(root->left) < 0) {
-            root->left = RR_Rotate(root->left);
-            return LL_Rotate(root);
-        }
-
-        if (balance < -1 && getBalanceFactor(root->right) <= 0) {
-            return RR_Rotate(root);
-        }
-
-        if (balance < -1 && getBalanceFactor(root->right) > 0) {
-            root->right = LL_Rotate(root->right);
-            return RR_Rotate(root);
+        if (balance < -1) {
+            if (getBalanceFactor(root->right) <= 0) {
+                return RR_Rotate(root);
+            } else {
+                root->right = LL_Rotate(root->right);
+                return RR_Rotate(root);
+            }
         }
 
         return root;
     }
 
-    void inorderTraversal(AvlNode<Comparator> *root) const {
-        if (root != nullptr) {
+    void inorderTraversal(AvlNode* root) const {
+        if (root) {
             inorderTraversal(root->left);
             cout << root->item.itemName << " - " << root->item.category << " - $" << root->item.price << endl;
             inorderTraversal(root->right);
         }
     }
 
-    void collectItems(AvlNode<Comparator> *node, vector<Item> &items) const {
-        if (node != nullptr) {
+    void collectItems(AvlNode* node, vector<Item>& items) const {
+        if (node) {
             collectItems(node->left, items);
             items.push_back(node->item);
             collectItems(node->right, items);
@@ -241,13 +187,13 @@ private:
     }
 
 public:
-    AvlTree(Comparator comp) : root(nullptr), comp(comp) {}
+    AvlTree(Comparator c) : root(nullptr), comp(c) {}
 
-    void addItem(const Item &item) {
+    void addItem(const Item& item) {
         root = insert(root, item);
     }
 
-    void removeItem(const Item &item) {
+    void removeItem(const Item& item) {
         root = deleteNode(root, item);
     }
 
@@ -260,8 +206,8 @@ public:
         inorderTraversal(root);
     }
 
-    void displayDescendingByComparatorHelper(AvlNode<Comparator> *node) const {
-        if (node != nullptr) {
+    void displayDescendingByComparatorHelper(AvlNode* node) const {
+        if (node) {
             displayDescendingByComparatorHelper(node->right);
             cout << node->item.itemName << " - " << node->item.category << " - $" << node->item.price << endl;
             displayDescendingByComparatorHelper(node->left);
@@ -275,10 +221,9 @@ public:
     void displayAscendingByPrice() const {
         vector<Item> items;
         collectItems(root, items);
-
         sort(items.begin(), items.end(), CompareByPrice());
 
-        for (const Item &item: items) {
+        for (const auto& item : items) {
             cout << item.itemName << " - " << item.category << " - $" << item.price << endl;
         }
     }
@@ -286,60 +231,59 @@ public:
     void displayDescendingByPrice() const {
         vector<Item> items;
         collectItems(root, items);
-
-        sort(items.begin(), items.end(), [](const Item &a, const Item &b) {
+        sort(items.begin(), items.end(), [](const Item& a, const Item& b) {
             return a.price > b.price;
         });
 
-        for (const Item &item: items) {
+        for (const auto& item : items) {
             cout << item.itemName << " - " << item.category << " - $" << item.price << endl;
         }
     }
 };
 
 int main() {
-    Item item1("Apple", "Fruit", 2);
-    Item item2("Banana", "Fruit", 1);
-    Item item3("Carrot", "Vegetable", 4);
-    Item item4("Daikon", "Vegetable", 3);
-    Item item5("Eggplant", "Vegetable", 6);
-    Item item6("Fig", "Fruit", 5);
     CompareByName compareByName;
-    AvlTree<CompareByName> avlByName(compareByName);
-    avlByName.addItem(item1);
-    avlByName.addItem(item2);
-    avlByName.addItem(item3);
-    avlByName.addItem(item4);
-    avlByName.addItem(item5);
-    avlByName.addItem(item6);
-
-    cout << "\nItems sorted by name:" << endl;
-    avlByName.display();
-
-
     CompareByCategory compareByCategory;
-    AvlTree<CompareByCategory> avlByCategory(compareByCategory);
-    avlByCategory.addItem(item1);
-    avlByCategory.addItem(item2);
-    avlByCategory.addItem(item3);
-    avlByCategory.addItem(item4);
-    avlByCategory.addItem(item5);
-    avlByCategory.addItem(item6);
-
-    cout << "\nItems sorted by category:" << endl;
-    avlByCategory.display();
-
     CompareByPrice compareByPrice;
-    AvlTree<CompareByPrice> avlByPrice(compareByPrice);
-    avlByPrice.addItem(item1);
-    avlByPrice.addItem(item2);
-    avlByPrice.addItem(item3);
-    avlByPrice.addItem(item4);
-    avlByPrice.addItem(item5);
-    avlByPrice.addItem(item6);
 
-    cout << "\nItems sorted by price:" << endl;
-    avlByPrice.display();
+    AvlTree<Item, CompareByName> treeByName(compareByName);
+    AvlTree<Item, CompareByCategory> treeByCategory(compareByCategory);
+    AvlTree<Item, CompareByPrice> treeByPrice(compareByPrice);
+
+    vector<Item> items = {
+            {"Apple", "Fruit", 2},
+            {"Banana", "Fruit", 1},
+            {"Daikon", "Vegetable", 3},
+            {"Bread", "Bakery", 6},
+            {"Milk", "Dairy", 10}
+    };
+
+    for (const auto& item : items) {
+        treeByName.addItem(item);
+        treeByCategory.addItem(item);
+        treeByPrice.addItem(item);
+    }
+
+    cout << "Display all items:" << endl;
+    treeByName.display();
+
+    cout << "\nDisplay ascending by name:" << endl;
+    treeByName.displayAscendingByComparator();
+
+    cout << "\nDisplay descending by name:" << endl;
+    treeByName.displayDescendingByComparator();
+
+    cout << "\nDisplay ascending by category:" << endl;
+    treeByCategory.displayAscendingByComparator();
+
+    cout << "\nDisplay descending by category:" << endl;
+    treeByCategory.displayDescendingByComparator();
+
+    cout << "\nDisplay ascending by price:" << endl;
+    treeByPrice.displayAscendingByPrice();
+
+    cout << "\nDisplay descending by price:" << endl;
+    treeByPrice.displayDescendingByPrice();
 
     return 0;
 }
