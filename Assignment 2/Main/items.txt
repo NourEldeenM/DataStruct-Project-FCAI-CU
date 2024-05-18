@@ -1,0 +1,48 @@
+12
+chocolate milk
+drink
+10
+
+bananas
+fruit
+75
+
+pepsi
+drink
+20
+
+cheddar cheese
+dairy
+49
+
+tuna
+meat
+90
+
+fanta orange
+drink
+20
+
+yogurt
+dairy
+13
+
+mint gum
+candy
+2
+
+water
+drink
+9
+
+apples
+fruit
+66
+
+beef
+meat
+284
+
+cheese cake
+dessert
+68

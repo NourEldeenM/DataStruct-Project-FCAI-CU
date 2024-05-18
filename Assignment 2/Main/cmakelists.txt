@@ -1,0 +1,28 @@
+cmake_minimum_required(VERSION 3.10)
+
+# Project Name
+project(TreeProject)
+
+# Set C++ Standard
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Include Directories
+include_directories(include)
+
+# Source Files
+set(SOURCES
+    src/Item.cpp
+    src/Menu.cpp
+    src/TreeUtils.cpp
+    src/BST.cpp
+    src/AVL.cpp
+    src/Heap.cpp
+    src/main.cpp
+)
+
+
+# Add Executable
+add_executable(TreeProject ${SOURCES})
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/items.txt ${CMAKE_CURRENT_BINARY_DIR}/items.txt COPYONLY) 
