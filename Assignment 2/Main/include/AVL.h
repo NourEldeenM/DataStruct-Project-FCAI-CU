@@ -36,8 +36,6 @@ public:
     void display() const;
     void displayAscendingByComparator() const;
     void displayDescendingByComparator() const;
-    void displayAscendingByPrice(AvlNode *node) const;
-    void displayDescendingByPrice(AvlNode *node) const;
     void displaySortedByPrice(bool ascending = true);
 };
 

@@ -103,25 +103,26 @@ void BinarySearchTree<Comparator>::displaySortByPrice(BinarySearchTree *node, st
 template <typename Comparator>
 void BinarySearchTree<Comparator>::insert(Item *item)
 {
-    if (compare(item, data))
+    if (data == nullptr)
     {
-        if (!left)
+        data = new Item(*item);
+    }
+    else
+    {
+        if (compare(item, data))
         {
-            left = new BinarySearchTree(item, compare);
-        }
-        else
-        {
+            if (!left)
+            {
+                left = new BinarySearchTree(compare);
+            }
             left->insert(item);
         }
-    }
-    else if (compare(data, item))
-    {
-        if (!right)
+        else if (compare(data, item))
         {
-            right = new BinarySearchTree(item, compare);
-        }
-        else
-        {
+            if (!right)
+            {
+                right = new BinarySearchTree(compare);
+            }
             right->insert(item);
         }
     }

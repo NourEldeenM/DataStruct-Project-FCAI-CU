@@ -62,7 +62,7 @@ typename AvlTree<Comparator>::AvlNode *AvlTree<Comparator>::insert(AvlNode *node
     }
     else
     {
-        return node; // Duplicate items are not allowed
+        return node;
     }
 
     updateHeight(node);

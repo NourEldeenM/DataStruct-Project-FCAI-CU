@@ -31,6 +31,7 @@ void displayBstMenu(BinarySearchTree<Comparator> &bst)
 {
     int treeChoice = 1, price;
     Item itemToRemove, itemToAdd;
+    string name;
     while (treeChoice != 0)
     {
         cout << "\nTree Menu:\n";
@@ -51,9 +52,11 @@ void displayBstMenu(BinarySearchTree<Comparator> &bst)
             bst.insert(&itemToAdd);
             break;
         case 2:
+        {
             cin >> itemToRemove;
             bst.delete_item(&itemToRemove);
             break;
+        }
         case 3:
             cout << "Tree Items:\n";
             bst.display();
